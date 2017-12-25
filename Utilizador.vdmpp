@@ -1,0 +1,58 @@
+class Utilizador
+types
+-- TODO Define types here
+	public String = seq of char;
+	public Sexo = <Masculino> | <Feminino>;
+	public Interesses = set of Interesse;
+	
+values
+-- TODO Define values here
+
+instance variables
+-- TODO Define instance variables here
+	private nome: String;
+	private sexo: Sexo;
+	private idade: nat1;
+	private interesses: Interesses := {};
+	
+operations
+-- TODO Define operations here
+	public Utilizador: String * Sexo * nat1 ==> Utilizador
+	Utilizador(nm,sexoC,idadeC) == (
+		nome := nm;
+		sexo := sexoC;
+		idade := idadeC;
+		return self
+	)
+	post interesses = {} and
+			nome = nm;
+	
+	public addInteresse: Interesse ==> ()
+ 	addInteresse(interesse) == interesses := interesses union {interesse}
+ 	pre interesse not in set interesses
+ 	post interesses = interesses~ union {interesse};
+ 	
+ 	public removeInteresse: Interesse ==> ()
+ 	removeInteresse(interesse) == interesses := interesses \ {interesse}
+ 	pre interesse in set interesses
+ 	post interesses = interesses~ \ {interesse};
+ 	
+ 	public pure getInteresses : () ==> Interesses
+	getInteresses() ==
+	(
+		return interesses;
+	);
+	
+	public pure getNome : () ==> String
+	getNome() ==
+	(
+		return nome;
+	);
+	
+functions
+-- TODO Define functiones here
+
+traces
+-- TODO Define Combinatorial Test Traces here
+
+end Utilizador

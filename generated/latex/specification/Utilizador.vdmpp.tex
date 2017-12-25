@@ -1,0 +1,101 @@
+\begin{vdmpp}[breaklines=true]
+class Utilizador
+types
+-- TODO Define types here
+ public String = seq of char;
+ public Sexo = <Masculino> | <Feminino>;
+ public Interesses = set of Interesse;
+ 
+values
+-- TODO Define values here
+
+instance variables
+-- TODO Define instance variables here
+ private nome: String;
+(*@
+\label{Utilizador:14}
+@*)
+ private sexo: Sexo;
+ private idade: nat1;
+ private interesses: Interesses := {};
+ 
+operations
+-- TODO Define operations here
+(*@
+\label{getNome:20}
+@*)
+ public Utilizador: String * Sexo * nat1 ==> Utilizador
+ Utilizador(nm,sexoC,idadeC) == (
+  nome := nm;
+  sexo := sexoC;
+  idade := idadeC;
+  return self
+ )
+ post interesses = {} and
+(*@
+\label{push:28}
+@*)
+(*@
+\label{addInteresse:28}
+@*)
+   nome = nm;
+ 
+ public addInteresse: Interesse ==> ()
+(*@
+\label{getInteresses:31}
+@*)
+  addInteresse(interesse) == (*@\vdmnotcovered{interesses}@*) := (*@\vdmnotcovered{interesses}@*) (*@\vdmnotcovered{union}@*) (*@\vdmnotcovered{\{}@*)(*@\vdmnotcovered{interesse}@*)}
+  pre interesse (*@\vdmnotcovered{not}@*) in set (*@\vdmnotcovered{interesses}@*)
+  post interesses = interesses~ union (*@\vdmnotcovered{\{}@*)(*@\vdmnotcovered{interesse}@*)};
+  
+(*@
+\label{removeInteresse:35}
+@*)
+  public removeInteresse: Interesse ==> ()
+  removeInteresse(interesse) == (*@\vdmnotcovered{interesses}@*) := (*@\vdmnotcovered{interesses}@*) (*@\vdmnotcovered{\textbackslash }@*) {(*@\vdmnotcovered{interesse}@*)}
+  pre (*@\vdmnotcovered{interesse}@*) (*@\vdmnotcovered{in}@*) set (*@\vdmnotcovered{interesses}@*)
+  post (*@\vdmnotcovered{interesses}@*) (*@\vdmnotcovered{=}@*) (*@\vdmnotcovered{interesses}@*)~ (*@\vdmnotcovered{\textbackslash }@*) (*@\vdmnotcovered{\{}@*)(*@\vdmnotcovered{interesse}@*)};
+  
+  public pure getInteresses : () ==> Interesses
+ getInteresses() ==
+ (*@\vdmnotcovered{(}@*)
+  return (*@\vdmnotcovered{interesses}@*);
+ );
+ 
+ public pure getNome : () ==> String
+ getNome() ==
+ (
+  return nome;
+ );
+ 
+functions
+-- TODO Define functiones here
+
+traces
+-- TODO Define Combinatorial Test Traces here
+
+end Utilizador
+\end{vdmpp}
+\bigskip
+\begin{longtable}{|l|r|r|r|}
+\hline
+Function or operation & Line & Coverage & Calls \\
+\hline
+\hline
+\hyperref[Utilizador:14]{Utilizador} & 14&100.0\% & 1 \\
+\hline
+\hyperref[addInteresse:28]{addInteresse} & 28&0.0\% & 0 \\
+\hline
+\hyperref[getInteresses:31]{getInteresses} & 31&0.0\% & 0 \\
+\hline
+\hyperref[getNome:20]{getNome} & 20&100.0\% & 1 \\
+\hline
+\hyperref[push:28]{push} & 28&100.0\% & 1 \\
+\hline
+\hyperref[removeInteresse:35]{removeInteresse} & 35&0.0\% & 0 \\
+\hline
+\hline
+Utilizador.vdmpp & & 39.2\% & 3 \\
+\hline
+\end{longtable}
+

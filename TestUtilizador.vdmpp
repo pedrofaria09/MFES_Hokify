@@ -1,0 +1,28 @@
+class TestUtilizador is subclass of MyTestCase
+types
+-- TODO Define types here
+values
+-- TODO Define values here
+instance variables
+-- TODO Define instance variables here
+operations
+-- TODO Define operations here
+public TestPlayerFirst :() ==> ()
+TestPlayerFirst() ==
+(
+	dcl user : Utilizador := new Utilizador("pedro",<Masculino>,27);
+	assertEqual(user.getNome(),"pedro");
+	return;
+);
+
+public static main: () ==> ()
+main() ==
+(
+   new TestUtilizador().TestPlayerFirst();
+);
+
+functions
+-- TODO Define functiones here
+traces
+-- TODO Define Combinatorial Test Traces here
+end TestUtilizador

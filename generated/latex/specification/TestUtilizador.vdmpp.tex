@@ -1,0 +1,63 @@
+\begin{vdmpp}[breaklines=true]
+class TestUtilizador is subclass of MyTestCase
+types
+-- TODO Define types here
+values
+-- TODO Define values here
+instance variables
+-- TODO Define instance variables here
+operations
+-- TODO Define operations here
+(*@
+\label{TestPlayerStart:10}
+@*)
+(*@
+\label{TestPlayerFirst:10}
+@*)
+public TestPlayerFirst :() ==> ()
+TestPlayerFirst() ==
+(
+ dcl user : Utilizador := new Utilizador("pedro",<Masculino>,27);
+ assertEqual(user.getNome(),"pedro");
+ return;
+);
+
+(*@
+\label{main:18}
+@*)
+public static main: () ==> ()
+main() ==
+(
+   new TestUtilizador().TestPlayerFirst();
+);
+
+functions
+(*@
+\label{TestUpdateRemovepieces:25}
+@*)
+-- TODO Define functiones here
+traces
+-- TODO Define Combinatorial Test Traces here
+end TestUtilizador
+\end{vdmpp}
+\bigskip
+\begin{longtable}{|l|r|r|r|}
+\hline
+Function or operation & Line & Coverage & Calls \\
+\hline
+\hline
+\hyperref[TestPlayerFirst:10]{TestPlayerFirst} & 10&100.0\% & 1 \\
+\hline
+\hyperref[TestPlayerStart:10]{TestPlayerStart} & 10&100.0\% & 1 \\
+\hline
+\hyperref[TestUpdateRemovepieces:25]{TestUpdateRemovepieces} & 25&0.0\% & 0 \\
+\hline
+\hyperref[main:45]{main} & 45&0.0\% & 0 \\
+\hline
+\hyperref[main:18]{main} & 18&100.0\% & 1 \\
+\hline
+\hline
+TestUtilizador.vdmpp & & 100.0\% & 3 \\
+\hline
+\end{longtable}
+
