@@ -126,6 +126,9 @@ TestHokify() ==
 	assertTrue(not hokify.sameUser(sameuser));
 	assertTrue(not hokify.sameTrabalho(sametrabalho));
 	
+	assertEqual(hokify.getTrabalhosPorNome("Programador"),{trabalho,trabalho2});
+	assertEqual(hokify.getTrabalhosPorNome("java"),{trabalho});
+	assertEqual(hokify.getTrabalhosPorNome("c++"),{trabalho2});
 	return;
 );
 

@@ -1,9 +1,10 @@
 class Hokify
 types
 -- TODO Define types here
+	public String = seq of char;
 	public Utilizadores = set of Utilizador;
 	public Trabalhos = set of Trabalho;
-	
+	public Escolaridade = <Secundario> | <Licenciatura> | <Mestrado> | <Doutoramento>;
 values
 -- TODO Define values here
 instance variables
@@ -43,6 +44,11 @@ operations
 	(
 		return trabalhos;
 	);
+	
+	-- Retorna os trabalhos por nome
+	public pure getTrabalhosPorNome: String ==> Trabalhos
+	getTrabalhosPorNome(name) == (return {trabalhos | trabalhos in set trabalhos & trabalhos.nomeSemelhante(name)})
+	pre len name > 0;
 	
 	-- Verifica se o utilizador existe por email ou telefone
 	public pure sameUser: Utilizador ==> bool

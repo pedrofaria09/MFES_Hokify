@@ -232,6 +232,37 @@ operations
  setEscolaridade(newEscolaridade) == escolaridade := newEscolaridade
  pre newEscolaridade <> undefined
  post escolaridade = newEscolaridade;
+ 
+(*@
+\label{similarName:172}
+@*)
+(*@
+\label{nomeSemelhante:172}
+@*)
+ public pure nomeSemelhante: String ==> bool
+ nomeSemelhante(n) == (
+  dcl nameS: seq of char := nome;
+  dcl found: bool := false;
+  
+  while len nameS >= len n and not found do (
+   found := true;
+ 
+   for index = 1 to len n do
+    if found and n(index) <> nameS(index) then (
+     found := false;
+    );
+   
+   if found then
+    return true
+   else (
+    nameS := tl nameS;
+    found := false;
+   );
+  );
+   
+  return false;
+ )
+ pre len n > 0;
   
 functions
 -- TODO Define functiones here
@@ -245,50 +276,54 @@ end Trabalho
 Function or operation & Line & Coverage & Calls \\
 \hline
 \hline
-\hyperref[Trabalho:27]{Trabalho} & 27&100.0\% & 47 \\
+\hyperref[Trabalho:27]{Trabalho} & 27&100.0\% & 75 \\
 \hline
-\hyperref[addInteresse:49]{addInteresse} & 49&100.0\% & 28 \\
+\hyperref[addInteresse:49]{addInteresse} & 49&100.0\% & 42 \\
 \hline
-\hyperref[addSkills:68]{addSkills} & 68&100.0\% & 28 \\
+\hyperref[addSkills:68]{addSkills} & 68&100.0\% & 42 \\
 \hline
-\hyperref[getEmail:99]{getEmail} & 99&100.0\% & 46 \\
+\hyperref[getEmail:99]{getEmail} & 99&100.0\% & 88 \\
 \hline
-\hyperref[getEntidade:93]{getEntidade} & 93&100.0\% & 28 \\
+\hyperref[getEntidade:93]{getEntidade} & 93&100.0\% & 49 \\
 \hline
-\hyperref[getEscolaridade:105]{getEscolaridade} & 105&100.0\% & 28 \\
+\hyperref[getEscolaridade:105]{getEscolaridade} & 105&100.0\% & 42 \\
 \hline
-\hyperref[getInteresses:61]{getInteresses} & 61&100.0\% & 28 \\
+\hyperref[getInteresses:61]{getInteresses} & 61&100.0\% & 42 \\
 \hline
-\hyperref[getLocalidade:123]{getLocalidade} & 123&100.0\% & 28 \\
+\hyperref[getLocalidade:123]{getLocalidade} & 123&100.0\% & 42 \\
 \hline
-\hyperref[getNome:87]{getNome} & 87&100.0\% & 42 \\
+\hyperref[getNome:87]{getNome} & 87&100.0\% & 70 \\
 \hline
-\hyperref[getPais:117]{getPais} & 117&100.0\% & 28 \\
+\hyperref[getPais:117]{getPais} & 117&100.0\% & 42 \\
 \hline
-\hyperref[getSkills:80]{getSkills} & 80&100.0\% & 28 \\
+\hyperref[getSkills:80]{getSkills} & 80&100.0\% & 42 \\
 \hline
-\hyperref[getTelefone:111]{getTelefone} & 111&100.0\% & 28 \\
+\hyperref[getTelefone:111]{getTelefone} & 111&100.0\% & 42 \\
 \hline
-\hyperref[removeInteresse:55]{removeInteresse} & 55&100.0\% & 14 \\
+\hyperref[nomeSemelhante:172]{nomeSemelhante} & 172&100.0\% & 295 \\
 \hline
-\hyperref[removeSkills:74]{removeSkills} & 74&100.0\% & 14 \\
+\hyperref[removeInteresse:55]{removeInteresse} & 55&100.0\% & 21 \\
 \hline
-\hyperref[setEmail:143]{setEmail} & 143&100.0\% & 14 \\
+\hyperref[removeSkills:74]{removeSkills} & 74&100.0\% & 21 \\
 \hline
-\hyperref[setEntidade:137]{setEntidade} & 137&100.0\% & 14 \\
+\hyperref[setEmail:143]{setEmail} & 143&100.0\% & 21 \\
 \hline
-\hyperref[setEscolaridade:167]{setEscolaridade} & 167&100.0\% & 14 \\
+\hyperref[setEntidade:137]{setEntidade} & 137&100.0\% & 21 \\
 \hline
-\hyperref[setLocalidade:161]{setLocalidade} & 161&100.0\% & 14 \\
+\hyperref[setEscolaridade:167]{setEscolaridade} & 167&100.0\% & 21 \\
 \hline
-\hyperref[setNome:131]{setNome} & 131&100.0\% & 14 \\
+\hyperref[setLocalidade:161]{setLocalidade} & 161&100.0\% & 21 \\
 \hline
-\hyperref[setPais:155]{setPais} & 155&100.0\% & 14 \\
+\hyperref[setNome:131]{setNome} & 131&100.0\% & 21 \\
 \hline
-\hyperref[setTelefone:149]{setTelefone} & 149&100.0\% & 14 \\
+\hyperref[setPais:155]{setPais} & 155&100.0\% & 21 \\
+\hline
+\hyperref[setTelefone:149]{setTelefone} & 149&100.0\% & 21 \\
+\hline
+\hyperref[similarName:172]{similarName} & 172&100.0\% & 295 \\
 \hline
 \hline
-Trabalho.vdmpp & & 100.0\% & 513 \\
+Trabalho.vdmpp & & 100.0\% & 1397 \\
 \hline
 \end{longtable}
 

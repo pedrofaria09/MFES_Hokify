@@ -168,6 +168,31 @@ operations
 	setEscolaridade(newEscolaridade) == escolaridade := newEscolaridade
 	pre newEscolaridade <> undefined
 	post escolaridade = newEscolaridade;
+	
+	public pure nomeSemelhante: String ==> bool
+	nomeSemelhante(n) == (
+		dcl nameS: seq of char := nome;
+		dcl found: bool := false;
+		
+		while len nameS >= len n and not found do (
+			found := true;
+	
+			for index = 1 to len n do
+				if found and n(index) <> nameS(index) then (
+					found := false;
+				);
+			
+			if found then
+				return true
+			else (
+				nameS := tl nameS;
+				found := false;
+			);
+		);
+			
+		return false;
+	)
+	pre len n > 0;
 		
 functions
 -- TODO Define functiones here
