@@ -49,6 +49,190 @@ operations
    pais = paisC and
    localidade = localidadeC;
    
+ -- Adicionar interesses
+(*@
+\label{addInteresse:49}
+@*)
+ public addInteresse: String ==> ()
+ addInteresse(String) == interesses := interesses union {String}
+ pre String not in set interesses
+ post interesses = interesses~ union {String};
+ 
+ -- Remover interesses
+(*@
+\label{removeInteresse:55}
+@*)
+ public removeInteresse: String ==> ()
+ removeInteresse(String) == interesses := interesses \ {String}
+ pre String in set interesses
+ post interesses = interesses~ \ {String};
+ 
+ -- Retorna os interesses
+(*@
+\label{getInteresses:61}
+@*)
+ public pure getInteresses : () ==> Interesses
+ getInteresses() ==
+ (
+  return interesses;
+ );
+ 
+ -- Adicionar skills
+(*@
+\label{addSkills:68}
+@*)
+ public addSkills: String ==> ()
+ addSkills(String) == skills := skills union {String}
+ pre String not in set skills
+ post skills = skills~ union {String};
+ 
+ -- Remover skills
+(*@
+\label{removeSkills:74}
+@*)
+ public removeSkills: String ==> ()
+ removeSkills(String) == skills := skills \ {String}
+ pre String in set skills
+ post skills = skills~ \ {String};
+ 
+ -- Retorna as skills
+(*@
+\label{getSkills:80}
+@*)
+ public pure getSkills : () ==> Skills
+ getSkills() ==
+ (
+  return skills;
+ );
+ 
+ -- Retorna o nome
+(*@
+\label{getNome:87}
+@*)
+ public pure getNome : () ==> String
+ getNome() ==
+ (
+  return nome;
+ );
+ -- Retorna o entidade
+(*@
+\label{getEntidade:93}
+@*)
+ public pure getEntidade : () ==> String
+ getEntidade() ==
+ (
+  return entidade;
+ );
+ -- Retorna o email
+(*@
+\label{getEmail:99}
+@*)
+ public pure getEmail : () ==> String
+ getEmail() ==
+ (
+  return email;
+ );
+ -- Retorna o escolaridade
+(*@
+\label{getEscolaridade:105}
+@*)
+ public pure getEscolaridade : () ==> Escolaridade
+ getEscolaridade() ==
+ (
+  return escolaridade;
+ );
+ -- Retorna o telefone
+(*@
+\label{getTelefone:111}
+@*)
+ public pure getTelefone : () ==> nat1
+ getTelefone() ==
+ (
+  return telefone;
+ );
+ -- Retorna o pais
+(*@
+\label{getPais:117}
+@*)
+ public pure getPais : () ==> String
+ getPais() ==
+ (
+  return pais;
+ );
+ -- Retorna o localidade
+(*@
+\label{getLocalidade:123}
+@*)
+ public pure getLocalidade : () ==> String
+ getLocalidade() ==
+ (
+  return localidade;
+ );
+ 
+ 
+ -- Editar Nome
+(*@
+\label{setNome:131}
+@*)
+ public setNome: String ==> ()
+ setNome(newName) == nome := newName
+ pre newName <> undefined
+ post nome = newName;
+ 
+ -- Editar Entidade
+(*@
+\label{setEntidade:137}
+@*)
+ public setEntidade: String ==> ()
+ setEntidade(newEntidade) == entidade := newEntidade
+ pre newEntidade <> undefined
+ post entidade = newEntidade;
+ 
+ -- Editar Email
+(*@
+\label{setEmail:143}
+@*)
+ public setEmail: String ==> ()
+ setEmail(newEmail) == email := newEmail
+ pre newEmail <> undefined
+ post email = newEmail;
+ 
+ -- Editar Telefone
+(*@
+\label{setTelefone:149}
+@*)
+ public setTelefone: nat1 ==> ()
+ setTelefone(newTelefone) == telefone := newTelefone
+ pre newTelefone <> undefined
+ post telefone = newTelefone;
+
+ -- Editar Pais
+(*@
+\label{setPais:155}
+@*)
+ public setPais: String ==> ()
+ setPais(newPais) == pais := newPais
+ pre newPais <> undefined
+ post pais = newPais;
+ 
+ -- Editar Localidade
+(*@
+\label{setLocalidade:161}
+@*)
+ public setLocalidade: String ==> ()
+ setLocalidade(newLocalidade) == localidade := newLocalidade
+ pre newLocalidade <> undefined
+ post localidade = newLocalidade;
+ 
+ -- Editar Escolaridade
+(*@
+\label{setEscolaridade:167}
+@*)
+ public setEscolaridade: Escolaridade ==> ()
+ setEscolaridade(newEscolaridade) == escolaridade := newEscolaridade
+ pre newEscolaridade <> undefined
+ post escolaridade = newEscolaridade;
+  
 functions
 -- TODO Define functiones here
 traces
@@ -61,10 +245,50 @@ end Trabalho
 Function or operation & Line & Coverage & Calls \\
 \hline
 \hline
-\hyperref[Trabalho:27]{Trabalho} & 27&100.0\% & 1 \\
+\hyperref[Trabalho:27]{Trabalho} & 27&100.0\% & 47 \\
+\hline
+\hyperref[addInteresse:49]{addInteresse} & 49&100.0\% & 28 \\
+\hline
+\hyperref[addSkills:68]{addSkills} & 68&100.0\% & 28 \\
+\hline
+\hyperref[getEmail:99]{getEmail} & 99&100.0\% & 46 \\
+\hline
+\hyperref[getEntidade:93]{getEntidade} & 93&100.0\% & 28 \\
+\hline
+\hyperref[getEscolaridade:105]{getEscolaridade} & 105&100.0\% & 28 \\
+\hline
+\hyperref[getInteresses:61]{getInteresses} & 61&100.0\% & 28 \\
+\hline
+\hyperref[getLocalidade:123]{getLocalidade} & 123&100.0\% & 28 \\
+\hline
+\hyperref[getNome:87]{getNome} & 87&100.0\% & 42 \\
+\hline
+\hyperref[getPais:117]{getPais} & 117&100.0\% & 28 \\
+\hline
+\hyperref[getSkills:80]{getSkills} & 80&100.0\% & 28 \\
+\hline
+\hyperref[getTelefone:111]{getTelefone} & 111&100.0\% & 28 \\
+\hline
+\hyperref[removeInteresse:55]{removeInteresse} & 55&100.0\% & 14 \\
+\hline
+\hyperref[removeSkills:74]{removeSkills} & 74&100.0\% & 14 \\
+\hline
+\hyperref[setEmail:143]{setEmail} & 143&100.0\% & 14 \\
+\hline
+\hyperref[setEntidade:137]{setEntidade} & 137&100.0\% & 14 \\
+\hline
+\hyperref[setEscolaridade:167]{setEscolaridade} & 167&100.0\% & 14 \\
+\hline
+\hyperref[setLocalidade:161]{setLocalidade} & 161&100.0\% & 14 \\
+\hline
+\hyperref[setNome:131]{setNome} & 131&100.0\% & 14 \\
+\hline
+\hyperref[setPais:155]{setPais} & 155&100.0\% & 14 \\
+\hline
+\hyperref[setTelefone:149]{setTelefone} & 149&100.0\% & 14 \\
 \hline
 \hline
-Trabalho.vdmpp & & 100.0\% & 1 \\
+Trabalho.vdmpp & & 100.0\% & 513 \\
 \hline
 \end{longtable}
 

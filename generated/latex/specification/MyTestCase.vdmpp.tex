@@ -15,8 +15,8 @@ operations
 @*)
  protected assertTrue: bool ==> ()
  assertTrue(arg) == 
-  (*@\vdmnotcovered{return}@*) 
- pre (*@\vdmnotcovered{arg}@*);
+  return 
+ pre arg;
   
  -- Simulates assertion checking by reducing it to post-condition checking.
  -- If values are not equal, prints a message in the console and generates 
@@ -26,12 +26,12 @@ operations
 @*)
  protected assertEqual: ? * ? ==> ()
  assertEqual(expected, actual) == 
-  if expected <> actual then (*@\vdmnotcovered{(}@*)
-     (*@\vdmnotcovered{IO`print}@*)((*@\vdmnotcovered{"Actual value ("}@*));
-     IO`print((*@\vdmnotcovered{actual}@*)); 
-     IO`print((*@\vdmnotcovered{") different from expected ("}@*));
-     IO`print((*@\vdmnotcovered{expected}@*));
-     (*@\vdmnotcovered{IO`println}@*)((*@\vdmnotcovered{")\textbackslash n"}@*))
+  if expected <> actual then (
+     IO`print("Actual value (");
+     IO`print(actual); 
+     IO`print(") different from expected (");
+     IO`print(expected);
+     IO`println(")\n")
   )
  post expected = actual
   
@@ -43,12 +43,12 @@ end MyTestCase
 Function or operation & Line & Coverage & Calls \\
 \hline
 \hline
-\hyperref[assertEqual:20]{assertEqual} & 20&38.8\% & 87 \\
+\hyperref[assertEqual:20]{assertEqual} & 20&100.0\% & 536 \\
 \hline
-\hyperref[assertTrue:12]{assertTrue} & 12&0.0\% & 0 \\
+\hyperref[assertTrue:12]{assertTrue} & 12&100.0\% & 3 \\
 \hline
 \hline
-MyTestCase.vdmpp & & 35.0\% & 87 \\
+MyTestCase.vdmpp & & 100.0\% & 539 \\
 \hline
 \end{longtable}
 

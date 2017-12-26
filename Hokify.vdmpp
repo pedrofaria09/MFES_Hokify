@@ -21,14 +21,49 @@ operations
 	--Adicionar Utilizadores
 	public addUtilizadores: Utilizador ==> ()
 	addUtilizadores(utilizador) == utilizadores := utilizadores union {utilizador}
-	pre utilizador not in set utilizadores
+	pre sameUser(utilizador)
 	post utilizadores = utilizadores~ union {utilizador};
 	
 	--Adicionar Trabalhos
 	public addTrabalhos: Trabalho ==> ()
 	addTrabalhos(trabalho) == trabalhos := trabalhos union {trabalho}
-	pre trabalho not in set trabalhos
+	pre sameTrabalho(trabalho)
 	post trabalhos = trabalhos~ union {trabalho};
+	
+	-- Retorna os utilizadores
+	public pure getUtilizadores : () ==> Utilizadores
+	getUtilizadores() ==
+	(
+		return utilizadores;
+	);
+	
+	-- Retorna os trabalhos
+	public pure getTrabalhos : () ==> Trabalhos
+	getTrabalhos() ==
+	(
+		return trabalhos;
+	);
+	
+	-- Verifica se o utilizador existe por email ou telefone
+	public pure sameUser: Utilizador ==> bool
+	sameUser(user) ==(
+		for all u in set utilizadores do
+			if (u.getEmail() = user.getEmail() or 
+					u.getTelefone() = user.getTelefone()) then
+				return false;
+		return true;
+	);
+	
+	-- Verifica se o trabalho existe por email ou nome ou entidade
+	public pure sameTrabalho: Trabalho ==> bool
+	sameTrabalho(trab) ==(
+		for all u in set trabalhos do
+			if (u.getEmail() = trab.getEmail() or 
+					u.getNome() = trab.getNome() or 
+					u.getEntidade() = trab.getEntidade()) then
+				return false;
+		return true;
+	);
 	
 functions
 -- TODO Define functiones here

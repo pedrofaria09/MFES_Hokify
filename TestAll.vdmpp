@@ -1,4 +1,4 @@
-class TestUtilizador is subclass of MyTestCase
+class TestAll is subclass of MyTestCase
 types
 -- TODO Define types here
 values
@@ -98,15 +98,56 @@ TestTrabalhoFirst() ==
 	return;
 );
 
+
+public TestHokify :() ==> ()
+TestHokify() ==
+(
+	dcl hokify : Hokify := new Hokify();
+	dcl utilizador : Utilizador := new Utilizador("Pedro","email@email.com",<Masculino>,<Licenciatura>,"Portugal","Porto",27,123456789);
+	dcl trabalho : Trabalho := new Trabalho("Programador de java","Google","google@google.pt",<Licenciatura>,123456789,"Portugal","Porto");
+	dcl sameuser : Utilizador := new Utilizador("Pedro","email@email.com",<Masculino>,<Licenciatura>,"Portugal","Porto",27,123456789);
+	dcl sametrabalho : Trabalho := new Trabalho("Programador de java","Google","google@google.pt",<Licenciatura>,123456789,"Portugal","Porto");
+	dcl utilizador2 : Utilizador := new Utilizador("Fabiola","gmail@gmail.com",<Feminino>,<Mestrado>,"Portugal","Lisboa",26,123123123);
+	dcl trabalho2 : Trabalho := new Trabalho("Programador de c++","Apple","apple@apple.pt",<Licenciatura>,4562343434,"Portugal","Lisboa");
+	
+	hokify.addUtilizadores(utilizador);
+	hokify.addTrabalhos(trabalho);
+	assertEqual(card hokify.getUtilizadores(),1);
+	assertEqual(card hokify.getTrabalhos(),1);
+	
+	hokify.addUtilizadores(utilizador2);
+	hokify.addTrabalhos(trabalho2);
+	assertEqual(card hokify.getUtilizadores(),2);
+	assertEqual(card hokify.getTrabalhos(),2);
+	
+	--Deve falhar pois estamos adicionando um utilizador igual
+	--hokify.addUtilizadores(sameuser);
+	--hokify.addTrabalhos(sametrabalho);
+	assertTrue(not hokify.sameUser(sameuser));
+	assertTrue(not hokify.sameTrabalho(sametrabalho));
+	
+	return;
+);
+
+
 public static main: () ==> ()
 main() ==
 (
-   new TestUtilizador().TestPlayerFirst();
-   new TestUtilizador().TestTrabalhoFirst();
+	IO`print("TestPlayerFirst -> ");
+	new TestAll().TestPlayerFirst();
+	IO`println("Passed");
+	
+	IO`print("TestTrabalhoFirst -> ");
+	new TestAll().TestTrabalhoFirst();
+	IO`println("Passed");
+	
+	IO`print("TestHokify -> ");
+	new TestAll().TestHokify();
+	IO`println("Passed");
 );
 
 functions
 -- TODO Define functiones here
 traces
 -- TODO Define Combinatorial Test Traces here
-end TestUtilizador
+end TestAll
