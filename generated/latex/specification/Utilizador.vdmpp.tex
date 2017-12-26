@@ -4,7 +4,8 @@ types
 -- TODO Define types here
  public String = seq of char;
  public Sexo = <Masculino> | <Feminino>;
- public Interesses = set of Interesse;
+ public Interesses = set of String;
+ public Skills = set of String;
  
 values
 -- TODO Define values here
@@ -12,62 +13,196 @@ values
 instance variables
 -- TODO Define instance variables here
  private nome: String;
-(*@
-\label{Utilizador:14}
-@*)
+ private email: String;
  private sexo: Sexo;
  private idade: nat1;
+ private telefone: nat1;
+ private pais : String;
+ private localidade: String;
  private interesses: Interesses := {};
+ private skills: Skills := {};
  
+(*@
+\label{Utilizador:24}
+@*)
 operations
 -- TODO Define operations here
-(*@
-\label{getNome:20}
-@*)
- public Utilizador: String * Sexo * nat1 ==> Utilizador
- Utilizador(nm,sexoC,idadeC) == (
+
+ --Construtor
+ public Utilizador: String * String * Sexo * String * String * nat1 * nat1 ==> Utilizador
+ Utilizador(nm,emailC,sexoC,paisC,localidadeC,idadeC,telefoneC) == (
   nome := nm;
+  email := emailC;
   sexo := sexoC;
   idade := idadeC;
+  telefone := telefoneC;
+  pais := paisC;
+  localidade := localidadeC;
   return self
+(*@
+\label{addInteresse:38}
+@*)
  )
  post interesses = {} and
+   skills = {} and
+   nome = nm and
+   email = emailC and
+   sexo = sexoC and
 (*@
-\label{push:28}
+\label{removeInteresse:44}
 @*)
-(*@
-\label{addInteresse:28}
-@*)
-   nome = nm;
+   idade = idadeC and
+   telefone = telefoneC and
+   pais = paisC and
+   localidade = localidadeC;
  
- public addInteresse: Interesse ==> ()
+ -- Adicionar interesses
 (*@
-\label{getInteresses:31}
+\label{getInteresses:50}
 @*)
-  addInteresse(interesse) == (*@\vdmnotcovered{interesses}@*) := (*@\vdmnotcovered{interesses}@*) (*@\vdmnotcovered{union}@*) (*@\vdmnotcovered{\{}@*)(*@\vdmnotcovered{interesse}@*)}
-  pre interesse (*@\vdmnotcovered{not}@*) in set (*@\vdmnotcovered{interesses}@*)
-  post interesses = interesses~ union (*@\vdmnotcovered{\{}@*)(*@\vdmnotcovered{interesse}@*)};
-  
+ public addInteresse: String ==> ()
+ addInteresse(String) == interesses := interesses union {String}
+ pre String not in set interesses
+ post interesses = interesses~ union {String};
+ 
+ -- Remover interesses
+ public removeInteresse: String ==> ()
 (*@
-\label{removeInteresse:35}
+\label{addSkills:57}
 @*)
-  public removeInteresse: Interesse ==> ()
-  removeInteresse(interesse) == (*@\vdmnotcovered{interesses}@*) := (*@\vdmnotcovered{interesses}@*) (*@\vdmnotcovered{\textbackslash }@*) {(*@\vdmnotcovered{interesse}@*)}
-  pre (*@\vdmnotcovered{interesse}@*) (*@\vdmnotcovered{in}@*) set (*@\vdmnotcovered{interesses}@*)
-  post (*@\vdmnotcovered{interesses}@*) (*@\vdmnotcovered{=}@*) (*@\vdmnotcovered{interesses}@*)~ (*@\vdmnotcovered{\textbackslash }@*) (*@\vdmnotcovered{\{}@*)(*@\vdmnotcovered{interesse}@*)};
-  
-  public pure getInteresses : () ==> Interesses
+ removeInteresse(String) == interesses := interesses \ {String}
+ pre String in set interesses
+ post interesses = interesses~ \ {String};
+ 
+ -- Retorna os interesses
+ public pure getInteresses : () ==> Interesses
+(*@
+\label{removeSkills:63}
+@*)
  getInteresses() ==
- (*@\vdmnotcovered{(}@*)
-  return (*@\vdmnotcovered{interesses}@*);
+ (
+  return interesses;
  );
  
+ -- Adicionar skills
+(*@
+\label{getSkills:69}
+@*)
+ public addSkills: String ==> ()
+ addSkills(String) == skills := skills union {String}
+ pre String not in set skills
+ post skills = skills~ union {String};
+ 
+ -- Remover skills
+ public removeSkills: String ==> ()
+(*@
+\label{getNome:76}
+@*)
+ removeSkills(String) == skills := skills \ {String}
+ pre String in set skills
+ post skills = skills~ \ {String};
+ 
+ -- Retorna as skills
+ public pure getSkills : () ==> Skills
+ getSkills() ==
+ (
+  return skills;
+ );
+(*@
+\label{getIdade:86}
+@*)
+ 
+ -- Retorna o nome
  public pure getNome : () ==> String
  getNome() ==
  (
   return nome;
  );
+(*@
+\label{getTelefone:93}
+@*)
  
+ -- Retorna a idade
+ public pure getIdade : () ==> nat1
+ getIdade() ==
+ (
+  return idade;
+ );
+(*@
+\label{getSexo:100}
+@*)
+ 
+ -- Retorna o telefone
+ public pure getTelefone : () ==> nat1
+(*@
+\label{getEmail:103}
+@*)
+ getTelefone() ==
+ (
+  return telefone;
+ );
+ 
+ -- Retorna o email
+ public pure getEmail : () ==> String
+ getEmail() ==
+ (
+  return email;
+ );
+ 
+ -- Retorna o sexo
+ public pure getSexo : () ==> Sexo
+(*@
+\label{setNome:117}
+@*)
+ getSexo() ==
+ (
+  return sexo;
+ );
+ 
+ -- Retorna o pais
+(*@
+\label{setEmail:123}
+@*)
+(*@
+\label{getPais:123}
+@*)
+ public pure getPais : () ==> String
+ getPais() ==
+ (
+  return pais;
+ );
+ 
+(*@
+\label{setTelefone:129}
+@*)
+ -- Retorna a localidade
+(*@
+\label{getLocalidade:130}
+@*)
+ public pure getLocalidade : () ==> String
+ getLocalidade() ==
+ (
+  return localidade;
+ );
+ 
+ -- Editar Nome
+ public setNome: String ==> ()
+ setNome(newName) == nome := newName
+ pre newName <> undefined
+ post nome = newName;
+ 
+ -- Editar Email
+ public setEmail: String ==> ()
+ setEmail(newEmail) == email := newEmail
+ pre newEmail <> undefined
+ post email = newEmail;
+ 
+ -- Editar Telefone
+ public setTelefone: nat1 ==> ()
+ setTelefone(newTelefone) == telefone := newTelefone
+ pre newTelefone <> undefined
+ post telefone = newTelefone;
+
 functions
 -- TODO Define functiones here
 
@@ -82,20 +217,42 @@ end Utilizador
 Function or operation & Line & Coverage & Calls \\
 \hline
 \hline
-\hyperref[Utilizador:14]{Utilizador} & 14&100.0\% & 1 \\
+\hyperref[Utilizador:24]{Utilizador} & 24&100.0\% & 1 \\
 \hline
-\hyperref[addInteresse:28]{addInteresse} & 28&0.0\% & 0 \\
+\hyperref[addInteresse:38]{addInteresse} & 38&100.0\% & 5 \\
 \hline
-\hyperref[getInteresses:31]{getInteresses} & 31&0.0\% & 0 \\
+\hyperref[addSkills:57]{addSkills} & 57&100.0\% & 4 \\
 \hline
-\hyperref[getNome:20]{getNome} & 20&100.0\% & 1 \\
+\hyperref[getEmail:103]{getEmail} & 103&100.0\% & 2 \\
 \hline
-\hyperref[push:28]{push} & 28&100.0\% & 1 \\
+\hyperref[getIdade:86]{getIdade} & 86&100.0\% & 1 \\
 \hline
-\hyperref[removeInteresse:35]{removeInteresse} & 35&0.0\% & 0 \\
+\hyperref[getInteresses:50]{getInteresses} & 50&100.0\% & 2 \\
+\hline
+\hyperref[getLocalidade:130]{getLocalidade} & 130&100.0\% & 1 \\
+\hline
+\hyperref[getNome:76]{getNome} & 76&100.0\% & 2 \\
+\hline
+\hyperref[getPais:123]{getPais} & 123&100.0\% & 1 \\
+\hline
+\hyperref[getSexo:100]{getSexo} & 100&100.0\% & 1 \\
+\hline
+\hyperref[getSkills:69]{getSkills} & 69&100.0\% & 2 \\
+\hline
+\hyperref[getTelefone:93]{getTelefone} & 93&100.0\% & 2 \\
+\hline
+\hyperref[removeInteresse:44]{removeInteresse} & 44&100.0\% & 2 \\
+\hline
+\hyperref[removeSkills:63]{removeSkills} & 63&100.0\% & 1 \\
+\hline
+\hyperref[setEmail:123]{setEmail} & 123&100.0\% & 1 \\
+\hline
+\hyperref[setNome:117]{setNome} & 117&100.0\% & 1 \\
+\hline
+\hyperref[setTelefone:129]{setTelefone} & 129&100.0\% & 1 \\
 \hline
 \hline
-Utilizador.vdmpp & & 39.2\% & 3 \\
+Utilizador.vdmpp & & 100.0\% & 30 \\
 \hline
 \end{longtable}
 

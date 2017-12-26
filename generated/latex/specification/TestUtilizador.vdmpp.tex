@@ -9,22 +9,50 @@ instance variables
 operations
 -- TODO Define operations here
 (*@
-\label{TestPlayerStart:10}
-@*)
-(*@
 \label{TestPlayerFirst:10}
 @*)
 public TestPlayerFirst :() ==> ()
 TestPlayerFirst() ==
 (
- dcl user : Utilizador := new Utilizador("pedro",<Masculino>,27);
- assertEqual(user.getNome(),"pedro");
+ dcl user : Utilizador := new Utilizador("Pedro","email@email.com",<Masculino>,"Portugal","Porto",27,123456789);
+ user.addInteresse("Informatica");
+ user.addInteresse("Cinema");
+ user.addSkills("Java");
+ user.addSkills("VDM");
+ 
+ assertEqual(user.getNome(),"Pedro");
+ assertEqual(user.getEmail(),"email@email.com");
+ assertEqual(user.getSexo(),<Masculino>);
+ assertEqual(user.getPais(),"Portugal");
+ assertEqual(user.getLocalidade(),"Porto");
+ assertEqual(user.getIdade(),27);
+ assertEqual(user.getTelefone(),123456789);
+ assertEqual(user.getInteresses(),{"Informatica","Cinema"});
+ assertEqual(user.getSkills(),{"Java","VDM"});
+ 
+ user.removeInteresse("Cinema");
+ assertEqual(user.getInteresses(),{"Informatica"});
+ 
+ user.removeSkills("VDM");
+ assertEqual(user.getSkills(),{"Java"});
+ 
+ user.setNome("Pedro Faria");
+ user.setEmail("PedroFaria@gmail.com");
+(*@
+\label{main:37}
+@*)
+ user.setTelefone(987654321);
+ assertEqual(user.getNome(),"Pedro Faria");
+ assertEqual(user.getEmail(),"PedroFaria@gmail.com");
+ assertEqual(user.getTelefone(),987654321);
+ 
+ --deve falhar pois estamos adicionando um duplicado
+ --user.addInteresse("Informatica");
+ --user.addSkills("Java");
+ 
  return;
 );
 
-(*@
-\label{main:18}
-@*)
 public static main: () ==> ()
 main() ==
 (
@@ -32,9 +60,6 @@ main() ==
 );
 
 functions
-(*@
-\label{TestUpdateRemovepieces:25}
-@*)
 -- TODO Define functiones here
 traces
 -- TODO Define Combinatorial Test Traces here
@@ -48,16 +73,10 @@ Function or operation & Line & Coverage & Calls \\
 \hline
 \hyperref[TestPlayerFirst:10]{TestPlayerFirst} & 10&100.0\% & 1 \\
 \hline
-\hyperref[TestPlayerStart:10]{TestPlayerStart} & 10&100.0\% & 1 \\
-\hline
-\hyperref[TestUpdateRemovepieces:25]{TestUpdateRemovepieces} & 25&0.0\% & 0 \\
-\hline
-\hyperref[main:45]{main} & 45&0.0\% & 0 \\
-\hline
-\hyperref[main:18]{main} & 18&100.0\% & 1 \\
+\hyperref[main:37]{main} & 37&100.0\% & 1 \\
 \hline
 \hline
-TestUtilizador.vdmpp & & 100.0\% & 3 \\
+TestUtilizador.vdmpp & & 100.0\% & 2 \\
 \hline
 \end{longtable}
 

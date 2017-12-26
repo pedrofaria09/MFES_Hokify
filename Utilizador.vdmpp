@@ -4,6 +4,7 @@ types
 	public String = seq of char;
 	public Sexo = <Masculino> | <Feminino>;
 	public Interesses = set of String;
+	public Skills = set of String;
 	
 values
 -- TODO Define values here
@@ -11,43 +12,76 @@ values
 instance variables
 -- TODO Define instance variables here
 	private nome: String;
+	private email: String;
 	private sexo: Sexo;
 	private idade: nat1;
+	private telefone: nat1;
+	private pais : String;
+	private localidade: String;
 	private interesses: Interesses := {};
+	private skills: Skills := {};
 	
 operations
 -- TODO Define operations here
 
 	--Construtor
-	public Utilizador: String * Sexo * nat1 ==> Utilizador
-	Utilizador(nm,sexoC,idadeC) == (
+	public Utilizador: String * String * Sexo * String * String * nat1 * nat1 ==> Utilizador
+	Utilizador(nm,emailC,sexoC,paisC,localidadeC,idadeC,telefoneC) == (
 		nome := nm;
+		email := emailC;
 		sexo := sexoC;
 		idade := idadeC;
+		telefone := telefoneC;
+		pais := paisC;
+		localidade := localidadeC;
 		return self
 	)
 	post interesses = {} and
+			skills = {} and
 			nome = nm and
+			email = emailC and
 			sexo = sexoC and
-			idade = idadeC;
+			idade = idadeC and
+			telefone = telefoneC and
+			pais = paisC and
+			localidade = localidadeC;
 	
 	-- Adicionar interesses
 	public addInteresse: String ==> ()
- 	addInteresse(String) == interesses := interesses union {String}
- 	pre String not in set interesses
- 	post interesses = interesses~ union {String};
- 	
- 	-- Remover interesses
- 	public removeInteresse: String ==> ()
- 	removeInteresse(String) == interesses := interesses \ {String}
- 	pre String in set interesses
- 	post interesses = interesses~ \ {String};
- 	
- 	-- Retorna os interesses
- 	public pure getInteresses : () ==> Interesses
+	addInteresse(String) == interesses := interesses union {String}
+	pre String not in set interesses
+	post interesses = interesses~ union {String};
+	
+	-- Remover interesses
+	public removeInteresse: String ==> ()
+	removeInteresse(String) == interesses := interesses \ {String}
+	pre String in set interesses
+	post interesses = interesses~ \ {String};
+	
+	-- Retorna os interesses
+	public pure getInteresses : () ==> Interesses
 	getInteresses() ==
 	(
 		return interesses;
+	);
+	
+	-- Adicionar skills
+	public addSkills: String ==> ()
+	addSkills(String) == skills := skills union {String}
+	pre String not in set skills
+	post skills = skills~ union {String};
+	
+	-- Remover skills
+	public removeSkills: String ==> ()
+	removeSkills(String) == skills := skills \ {String}
+	pre String in set skills
+	post skills = skills~ \ {String};
+	
+	-- Retorna as skills
+	public pure getSkills : () ==> Skills
+	getSkills() ==
+	(
+		return skills;
 	);
 	
 	-- Retorna o nome
@@ -57,6 +91,66 @@ operations
 		return nome;
 	);
 	
+	-- Retorna a idade
+	public pure getIdade : () ==> nat1
+	getIdade() ==
+	(
+		return idade;
+	);
+	
+	-- Retorna o telefone
+	public pure getTelefone : () ==> nat1
+	getTelefone() ==
+	(
+		return telefone;
+	);
+	
+	-- Retorna o email
+	public pure getEmail : () ==> String
+	getEmail() ==
+	(
+		return email;
+	);
+	
+	-- Retorna o sexo
+	public pure getSexo : () ==> Sexo
+	getSexo() ==
+	(
+		return sexo;
+	);
+	
+	-- Retorna o pais
+	public pure getPais : () ==> String
+	getPais() ==
+	(
+		return pais;
+	);
+	
+	-- Retorna a localidade
+	public pure getLocalidade : () ==> String
+	getLocalidade() ==
+	(
+		return localidade;
+	);
+	
+	-- Editar Nome
+	public setNome: String ==> ()
+	setNome(newName) == nome := newName
+	pre newName <> undefined
+	post nome = newName;
+	
+	-- Editar Email
+	public setEmail: String ==> ()
+	setEmail(newEmail) == email := newEmail
+	pre newEmail <> undefined
+	post email = newEmail;
+	
+	-- Editar Telefone
+	public setTelefone: nat1 ==> ()
+	setTelefone(newTelefone) == telefone := newTelefone
+	pre newTelefone <> undefined
+	post telefone = newTelefone;
+
 functions
 -- TODO Define functiones here
 

@@ -27,10 +27,10 @@ operations
  protected assertEqual: ? * ? ==> ()
  assertEqual(expected, actual) == 
   if expected <> actual then (*@\vdmnotcovered{(}@*)
-     IO`print((*@\vdmnotcovered{"Actual value ("}@*));
-     (*@\vdmnotcovered{IO`print}@*)((*@\vdmnotcovered{actual}@*)); 
+     (*@\vdmnotcovered{IO`print}@*)((*@\vdmnotcovered{"Actual value ("}@*));
+     IO`print((*@\vdmnotcovered{actual}@*)); 
      (*@\vdmnotcovered{IO`print}@*)((*@\vdmnotcovered{") different from expected ("}@*));
-     (*@\vdmnotcovered{IO`print}@*)((*@\vdmnotcovered{expected}@*));
+     IO`print((*@\vdmnotcovered{expected}@*));
      (*@\vdmnotcovered{IO`println}@*)((*@\vdmnotcovered{")\textbackslash n"}@*))
   )
  post expected = actual
@@ -43,12 +43,12 @@ end MyTestCase
 Function or operation & Line & Coverage & Calls \\
 \hline
 \hline
-\hyperref[assertEqual:20]{assertEqual} & 20&38.8\% & 1 \\
+\hyperref[assertEqual:20]{assertEqual} & 20&38.8\% & 55 \\
 \hline
 \hyperref[assertTrue:12]{assertTrue} & 12&0.0\% & 0 \\
 \hline
 \hline
-MyTestCase.vdmpp & & 35.0\% & 1 \\
+MyTestCase.vdmpp & & 35.0\% & 55 \\
 \hline
 \end{longtable}
 

@@ -10,8 +10,39 @@ operations
 public TestPlayerFirst :() ==> ()
 TestPlayerFirst() ==
 (
-	dcl user : Utilizador := new Utilizador("pedro",<Masculino>,27);
-	assertEqual(user.getNome(),"pedro");
+	dcl user : Utilizador := new Utilizador("Pedro","email@email.com",<Masculino>,"Portugal","Porto",27,123456789);
+	user.addInteresse("Informatica");
+	user.addInteresse("Cinema");
+	user.addSkills("Java");
+	user.addSkills("VDM");
+	
+	assertEqual(user.getNome(),"Pedro");
+	assertEqual(user.getEmail(),"email@email.com");
+	assertEqual(user.getSexo(),<Masculino>);
+	assertEqual(user.getPais(),"Portugal");
+	assertEqual(user.getLocalidade(),"Porto");
+	assertEqual(user.getIdade(),27);
+	assertEqual(user.getTelefone(),123456789);
+	assertEqual(user.getInteresses(),{"Informatica","Cinema"});
+	assertEqual(user.getSkills(),{"Java","VDM"});
+	
+	user.removeInteresse("Cinema");
+	assertEqual(user.getInteresses(),{"Informatica"});
+	
+	user.removeSkills("VDM");
+	assertEqual(user.getSkills(),{"Java"});
+	
+	user.setNome("Pedro Faria");
+	user.setEmail("PedroFaria@gmail.com");
+	user.setTelefone(987654321);
+	assertEqual(user.getNome(),"Pedro Faria");
+	assertEqual(user.getEmail(),"PedroFaria@gmail.com");
+	assertEqual(user.getTelefone(),987654321);
+	
+	--deve falhar pois estamos adicionando um duplicado
+	--user.addInteresse("Informatica");
+	--user.addSkills("Java");
+	
 	return;
 );
 
