@@ -34,9 +34,13 @@ TestPlayerFirst() ==
 	
 	user.setNome("Pedro Faria");
 	user.setEmail("PedroFaria@gmail.com");
+	user.setPais("Espanha");
+	user.setLocalidade("Madrid");
 	user.setTelefone(987654321);
 	assertEqual(user.getNome(),"Pedro Faria");
 	assertEqual(user.getEmail(),"PedroFaria@gmail.com");
+	assertEqual(user.getPais(),"Espanha");
+	assertEqual(user.getLocalidade(),"Madrid");
 	assertEqual(user.getTelefone(),987654321);
 	
 	--deve falhar pois estamos adicionando um duplicado
