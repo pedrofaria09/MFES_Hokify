@@ -45,6 +45,130 @@ operations
 			pais = paisC and
 			localidade = localidadeC;
 			
+	-- Adicionar interesses
+	public addInteresse: String ==> ()
+	addInteresse(String) == interesses := interesses union {String}
+	pre String not in set interesses
+	post interesses = interesses~ union {String};
+	
+	-- Remover interesses
+	public removeInteresse: String ==> ()
+	removeInteresse(String) == interesses := interesses \ {String}
+	pre String in set interesses
+	post interesses = interesses~ \ {String};
+	
+	-- Retorna os interesses
+	public pure getInteresses : () ==> Interesses
+	getInteresses() ==
+	(
+		return interesses;
+	);
+	
+	-- Adicionar skills
+	public addSkills: String ==> ()
+	addSkills(String) == skills := skills union {String}
+	pre String not in set skills
+	post skills = skills~ union {String};
+	
+	-- Remover skills
+	public removeSkills: String ==> ()
+	removeSkills(String) == skills := skills \ {String}
+	pre String in set skills
+	post skills = skills~ \ {String};
+	
+	-- Retorna as skills
+	public pure getSkills : () ==> Skills
+	getSkills() ==
+	(
+		return skills;
+	);
+	
+	-- Retorna o nome
+	public pure getNome : () ==> String
+	getNome() ==
+	(
+		return nome;
+	);
+	-- Retorna o entidade
+	public pure getEntidade : () ==> String
+	getEntidade() ==
+	(
+		return entidade;
+	);
+	-- Retorna o email
+	public pure getEmail : () ==> String
+	getEmail() ==
+	(
+		return email;
+	);
+	-- Retorna o escolaridade
+	public pure getEscolaridade : () ==> Escolaridade
+	getEscolaridade() ==
+	(
+		return escolaridade;
+	);
+	-- Retorna o telefone
+	public pure getTelefone : () ==> nat1
+	getTelefone() ==
+	(
+		return telefone;
+	);
+	-- Retorna o pais
+	public pure getPais : () ==> String
+	getPais() ==
+	(
+		return pais;
+	);
+	-- Retorna o localidade
+	public pure getLocalidade : () ==> String
+	getLocalidade() ==
+	(
+		return localidade;
+	);
+	
+	
+	-- Editar Nome
+	public setNome: String ==> ()
+	setNome(newName) == nome := newName
+	pre newName <> undefined
+	post nome = newName;
+	
+	-- Editar Entidade
+	public setEntidade: String ==> ()
+	setEntidade(newEntidade) == entidade := newEntidade
+	pre newEntidade <> undefined
+	post entidade = newEntidade;
+	
+	-- Editar Email
+	public setEmail: String ==> ()
+	setEmail(newEmail) == email := newEmail
+	pre newEmail <> undefined
+	post email = newEmail;
+	
+	-- Editar Telefone
+	public setTelefone: nat1 ==> ()
+	setTelefone(newTelefone) == telefone := newTelefone
+	pre newTelefone <> undefined
+	post telefone = newTelefone;
+
+	-- Editar Pais
+	public setPais: String ==> ()
+	setPais(newPais) == pais := newPais
+	pre newPais <> undefined
+	post pais = newPais;
+	
+	-- Editar Localidade
+	public setLocalidade: String ==> ()
+	setLocalidade(newLocalidade) == localidade := newLocalidade
+	pre newLocalidade <> undefined
+	post localidade = newLocalidade;
+	
+	-- Editar Escolaridade
+	public setEscolaridade: Escolaridade ==> ()
+	setEscolaridade(newEscolaridade) == escolaridade := newEscolaridade
+	pre newEscolaridade <> undefined
+	post escolaridade = newEscolaridade;
+		
 functions
 -- TODO Define functiones here
 traces
