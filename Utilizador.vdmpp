@@ -3,7 +3,7 @@ types
 -- TODO Define types here
 	public String = seq of char;
 	public Sexo = <Masculino> | <Feminino>;
-	public Interesses = set of Interesse;
+	public Interesses = set of String;
 	
 values
 -- TODO Define values here
@@ -17,6 +17,8 @@ instance variables
 	
 operations
 -- TODO Define operations here
+
+	--Construtor
 	public Utilizador: String * Sexo * nat1 ==> Utilizador
 	Utilizador(nm,sexoC,idadeC) == (
 		nome := nm;
@@ -25,24 +27,30 @@ operations
 		return self
 	)
 	post interesses = {} and
-			nome = nm;
+			nome = nm and
+			sexo = sexoC and
+			idade = idadeC;
 	
-	public addInteresse: Interesse ==> ()
- 	addInteresse(interesse) == interesses := interesses union {interesse}
- 	pre interesse not in set interesses
- 	post interesses = interesses~ union {interesse};
+	-- Adicionar interesses
+	public addInteresse: String ==> ()
+ 	addInteresse(String) == interesses := interesses union {String}
+ 	pre String not in set interesses
+ 	post interesses = interesses~ union {String};
  	
- 	public removeInteresse: Interesse ==> ()
- 	removeInteresse(interesse) == interesses := interesses \ {interesse}
- 	pre interesse in set interesses
- 	post interesses = interesses~ \ {interesse};
+ 	-- Remover interesses
+ 	public removeInteresse: String ==> ()
+ 	removeInteresse(String) == interesses := interesses \ {String}
+ 	pre String in set interesses
+ 	post interesses = interesses~ \ {String};
  	
+ 	-- Retorna os interesses
  	public pure getInteresses : () ==> Interesses
 	getInteresses() ==
 	(
 		return interesses;
 	);
 	
+	-- Retorna o nome
 	public pure getNome : () ==> String
 	getNome() ==
 	(
