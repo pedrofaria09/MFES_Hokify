@@ -19,6 +19,7 @@ TestPlayerFirst() ==
 	assertEqual(user.getNome(),"Pedro");
 	assertEqual(user.getEmail(),"email@email.com");
 	assertEqual(user.getSexo(),<Masculino>);
+	assertEqual(user.getEscolaridade(),<Licenciatura>);
 	assertEqual(user.getPais(),"Portugal");
 	assertEqual(user.getLocalidade(),"Porto");
 	assertEqual(user.getIdade(),27);
@@ -36,11 +37,13 @@ TestPlayerFirst() ==
 	user.setEmail("PedroFaria@gmail.com");
 	user.setPais("Espanha");
 	user.setLocalidade("Madrid");
+	user.setEscolaridade(<Mestrado>);
 	user.setTelefone(987654321);
 	assertEqual(user.getNome(),"Pedro Faria");
 	assertEqual(user.getEmail(),"PedroFaria@gmail.com");
 	assertEqual(user.getPais(),"Espanha");
 	assertEqual(user.getLocalidade(),"Madrid");
+	assertEqual(user.getEscolaridade(),<Mestrado>);
 	assertEqual(user.getTelefone(),987654321);
 	
 	--deve falhar pois estamos adicionando um duplicado

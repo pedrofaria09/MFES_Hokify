@@ -1,3 +1,4 @@
 \contentsline {section}{\numberline {1}MyTestCase}{1}{section.1}
 \contentsline {section}{\numberline {2}TestUtilizador}{2}{section.2}
-\contentsline {section}{\numberline {3}Utilizador}{3}{section.3}
+\contentsline {section}{\numberline {3}Trabalho}{3}{section.3}
+\contentsline {section}{\numberline {4}Utilizador}{4}{section.4}

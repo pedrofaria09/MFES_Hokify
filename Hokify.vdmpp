@@ -1,0 +1,37 @@
+class Hokify
+types
+-- TODO Define types here
+	public Utilizadores = set of Utilizador;
+	public Trabalhos = set of Trabalho;
+	
+values
+-- TODO Define values here
+instance variables
+-- TODO Define instance variables here
+	private utilizadores: Utilizadores := {};
+	private trabalhos: Trabalhos := {};
+	
+operations
+-- TODO Define operations here
+	
+	--Construtor
+	public Hokify: () ==> Hokify
+	Hokify()==(return self);
+	
+	--Adicionar Utilizadores
+	public addUtilizadores: Utilizador ==> ()
+	addUtilizadores(utilizador) == utilizadores := utilizadores union {utilizador}
+	pre utilizador not in set utilizadores
+	post utilizadores = utilizadores~ union {utilizador};
+	
+	--Adicionar Trabalhos
+	public addTrabalhos: Trabalho ==> ()
+	addTrabalhos(trabalho) == trabalhos := trabalhos union {trabalho}
+	pre trabalho not in set trabalhos
+	post trabalhos = trabalhos~ union {trabalho};
+	
+functions
+-- TODO Define functiones here
+traces
+-- TODO Define Combinatorial Test Traces here
+end Hokify
