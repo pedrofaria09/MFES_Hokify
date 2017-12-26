@@ -1,0 +1,52 @@
+class Trabalho
+types
+-- TODO Define types here
+	public String = seq of char;
+	public Escolaridade = <Secundario> | <Licenciatura> | <Mestrado> | <Doutoramento>;
+	public Interesses = set of String;
+	public Skills = set of String;
+	
+values
+-- TODO Define values here
+instance variables
+-- TODO Define instance variables here
+	private nome: String;
+	private entidade: String;
+	private email: String;
+	private escolaridade: Escolaridade;
+	private telefone: nat1;
+	private pais: String;
+	private localidade: String;
+	private interesses: Interesses := {};
+	private skills: Skills := {};
+	
+operations
+-- TODO Define operations here
+
+	--Construtor
+	public Trabalho: String * String * String * Escolaridade * nat1 * String * String ==> Trabalho
+	Trabalho(nomeC,entidadeC,emailC,escolaridadeC,telefoneC,paisC,localidadeC) == (
+		nome := nomeC;
+		entidade := entidadeC;
+		email := emailC;
+		escolaridade := escolaridadeC;
+		telefone := telefoneC;
+		pais := paisC;
+		localidade := localidadeC;
+		return self;
+	)
+	post interesses = {} and
+			skills = {} and
+			nome = nomeC and
+			entidade = entidadeC and
+			email = emailC and
+			escolaridade = escolaridadeC and
+			telefone = telefoneC and
+			pais = paisC and
+			localidade = localidadeC;
+			
+functions
+-- TODO Define functiones here
+traces
+-- TODO Define Combinatorial Test Traces here
+end Trabalho

@@ -10,7 +10,7 @@ operations
 public TestPlayerFirst :() ==> ()
 TestPlayerFirst() ==
 (
-	dcl user : Utilizador := new Utilizador("Pedro","email@email.com",<Masculino>,"Portugal","Porto",27,123456789);
+	dcl user : Utilizador := new Utilizador("Pedro","email@email.com",<Masculino>,<Licenciatura>,"Portugal","Porto",27,123456789);
 	user.addInteresse("Informatica");
 	user.addInteresse("Cinema");
 	user.addSkills("Java");
@@ -46,10 +46,20 @@ TestPlayerFirst() ==
 	return;
 );
 
+
+public TestTrabalhoFirst :() ==> ()
+TestTrabalhoFirst() ==
+(
+	dcl trabalho : Trabalho := new Trabalho("Programador de java","Google","google@google.pt",<Licenciatura>,123456789,"Portugal","Porto");
+	
+	return;
+);
+
 public static main: () ==> ()
 main() ==
 (
    new TestUtilizador().TestPlayerFirst();
+   new TestUtilizador().TestTrabalhoFirst();
 );
 
 functions

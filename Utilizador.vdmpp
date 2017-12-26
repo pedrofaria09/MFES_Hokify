@@ -3,6 +3,7 @@ types
 -- TODO Define types here
 	public String = seq of char;
 	public Sexo = <Masculino> | <Feminino>;
+	public Escolaridade = <Secundario> | <Licenciatura> | <Mestrado> | <Doutoramento>;
 	public Interesses = set of String;
 	public Skills = set of String;
 	
@@ -14,9 +15,10 @@ instance variables
 	private nome: String;
 	private email: String;
 	private sexo: Sexo;
+	private escolaridade: Escolaridade;
 	private idade: nat1;
 	private telefone: nat1;
-	private pais : String;
+	private pais: String;
 	private localidade: String;
 	private interesses: Interesses := {};
 	private skills: Skills := {};
@@ -25,11 +27,12 @@ operations
 -- TODO Define operations here
 
 	--Construtor
-	public Utilizador: String * String * Sexo * String * String * nat1 * nat1 ==> Utilizador
-	Utilizador(nm,emailC,sexoC,paisC,localidadeC,idadeC,telefoneC) == (
+	public Utilizador: String * String * Sexo * Escolaridade * String * String * nat1 * nat1 ==> Utilizador
+	Utilizador(nm,emailC,sexoC,escolaridadeC,paisC,localidadeC,idadeC,telefoneC) == (
 		nome := nm;
 		email := emailC;
 		sexo := sexoC;
+		escolaridade := escolaridadeC;
 		idade := idadeC;
 		telefone := telefoneC;
 		pais := paisC;
