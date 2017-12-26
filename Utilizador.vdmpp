@@ -136,6 +136,13 @@ operations
 		return localidade;
 	);
 	
+	-- Retorna a Escolaridade
+	public pure getEscolaridade : () ==> Escolaridade
+	getEscolaridade() ==
+	(
+		return escolaridade;
+	);
+	
 	-- Editar Nome
 	public setNome: String ==> ()
 	setNome(newName) == nome := newName
@@ -167,10 +174,10 @@ operations
 	post localidade = newLocalidade;
 	
 	-- Editar Escolaridade
-	--public setEscolaridade: String ==> ()
-	--setEscolaridade(newEscolaridade) == escolaridade := newEscolaridade
-	--pre newEscolaridade <> undefined
-	--post escolaridade = newEscolaridade;
+	public setEscolaridade: Escolaridade ==> ()
+	setEscolaridade(newEscolaridade) == escolaridade := newEscolaridade
+	pre newEscolaridade <> undefined
+	post escolaridade = newEscolaridade;
 	
 functions
 -- TODO Define functiones here

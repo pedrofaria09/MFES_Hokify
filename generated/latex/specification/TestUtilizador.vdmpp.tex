@@ -14,15 +14,19 @@ operations
 public TestPlayerFirst :() ==> ()
 TestPlayerFirst() ==
 (
- dcl user : Utilizador := new Utilizador("Pedro","email@email.com",<Masculino>,"Portugal","Porto",27,123456789);
+ dcl user : Utilizador := new Utilizador("Pedro","email@email.com",<Masculino>,<Licenciatura>,"Portugal","Porto",27,123456789);
  user.addInteresse("Informatica");
  user.addInteresse("Cinema");
  user.addSkills("Java");
  user.addSkills("VDM");
+(*@
+\label{main:18}
+@*)
  
  assertEqual(user.getNome(),"Pedro");
  assertEqual(user.getEmail(),"email@email.com");
  assertEqual(user.getSexo(),<Masculino>);
+ assertEqual(user.getEscolaridade(),<Licenciatura>);
  assertEqual(user.getPais(),"Portugal");
  assertEqual(user.getLocalidade(),"Porto");
  assertEqual(user.getIdade(),27);
@@ -38,18 +42,67 @@ TestPlayerFirst() ==
  
  user.setNome("Pedro Faria");
  user.setEmail("PedroFaria@gmail.com");
-(*@
-\label{main:37}
-@*)
+ user.setPais("Espanha");
+ user.setLocalidade("Madrid");
  user.setTelefone(987654321);
+ user.setEscolaridade(<Mestrado>);
  assertEqual(user.getNome(),"Pedro Faria");
  assertEqual(user.getEmail(),"PedroFaria@gmail.com");
+ assertEqual(user.getPais(),"Espanha");
+ assertEqual(user.getLocalidade(),"Madrid");
  assertEqual(user.getTelefone(),987654321);
+ assertEqual(user.getEscolaridade(),<Mestrado>);
  
  --deve falhar pois estamos adicionando um duplicado
  --user.addInteresse("Informatica");
  --user.addSkills("Java");
  
+ return;
+(*@
+\label{TestTrabalhoFirst:54}
+@*)
+);
+
+
+public TestTrabalhoFirst :() ==> ()
+TestTrabalhoFirst() ==
+(
+ dcl trabalho : Trabalho := new Trabalho("Programador de java","Google","google@google.pt",<Licenciatura>,123456789,"Portugal","Porto");
+ trabalho.addInteresse("Informatica");
+ trabalho.addInteresse("Cinema");
+ trabalho.addSkills("Java");
+ trabalho.addSkills("VDM");
+ 
+ assertEqual(trabalho.getNome(),"Programador de java");
+ assertEqual(trabalho.getEntidade(), "Google");
+ assertEqual(trabalho.getEmail(),"google@google.pt");
+ assertEqual(trabalho.getEscolaridade(),<Licenciatura>);
+ assertEqual(trabalho.getTelefone(),123456789);
+ assertEqual(trabalho.getPais(),"Portugal");
+ assertEqual(trabalho.getLocalidade(),"Porto");
+ assertEqual(trabalho.getInteresses(),{"Informatica","Cinema"});
+ assertEqual(trabalho.getSkills(),{"Java","VDM"});
+ 
+ trabalho.removeInteresse("Cinema");
+ assertEqual(trabalho.getInteresses(),{"Informatica"});
+ 
+ trabalho.removeSkills("VDM");
+ assertEqual(trabalho.getSkills(),{"Java"});
+ 
+ trabalho.setNome("Programador de C++");
+ trabalho.setEntidade("apple");
+ trabalho.setEmail("apple@apple.pt");
+ trabalho.setPais("Espanha");
+ trabalho.setLocalidade("Madrid");
+ trabalho.setTelefone(987654321);
+ trabalho.setEscolaridade(<Mestrado>);
+ assertEqual(trabalho.getNome(),"Programador de C++");
+ assertEqual(trabalho.getEmail(),"apple@apple.pt");
+ assertEqual(trabalho.getPais(),"Espanha");
+ assertEqual(trabalho.getLocalidade(),"Madrid");
+ assertEqual(trabalho.getTelefone(),987654321);
+ assertEqual(trabalho.getEscolaridade(),<Mestrado>);
+
  return;
 );
 
@@ -57,6 +110,7 @@ public static main: () ==> ()
 main() ==
 (
    new TestUtilizador().TestPlayerFirst();
+   new TestUtilizador().TestTrabalhoFirst();
 );
 
 functions
@@ -71,12 +125,14 @@ end TestUtilizador
 Function or operation & Line & Coverage & Calls \\
 \hline
 \hline
-\hyperref[TestPlayerFirst:10]{TestPlayerFirst} & 10&100.0\% & 1 \\
+\hyperref[TestPlayerFirst:10]{TestPlayerFirst} & 10&100.0\% & 6 \\
 \hline
-\hyperref[main:37]{main} & 37&100.0\% & 1 \\
+\hyperref[TestTrabalhoFirst:54]{TestTrabalhoFirst} & 54&100.0\% & 5 \\
+\hline
+\hyperref[main:18]{main} & 18&100.0\% & 4 \\
 \hline
 \hline
-TestUtilizador.vdmpp & & 100.0\% & 2 \\
+TestUtilizador.vdmpp & & 100.0\% & 15 \\
 \hline
 \end{longtable}
 
