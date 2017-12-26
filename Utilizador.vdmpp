@@ -154,6 +154,24 @@ operations
 	pre newTelefone <> undefined
 	post telefone = newTelefone;
 
+	-- Editar Pais
+	public setPais: String ==> ()
+	setPais(newPais) == pais := newPais
+	pre newPais <> undefined
+	post pais = newPais;
+	
+	-- Editar Localidade
+	public setLocalidade: String ==> ()
+	setLocalidade(newLocalidade) == localidade := newLocalidade
+	pre newLocalidade <> undefined
+	post localidade = newLocalidade;
+	
+	-- Editar Escolaridade
+	--public setEscolaridade: String ==> ()
+	--setEscolaridade(newEscolaridade) == escolaridade := newEscolaridade
+	--pre newEscolaridade <> undefined
+	--post escolaridade = newEscolaridade;
+	
 functions
 -- TODO Define functiones here
 
