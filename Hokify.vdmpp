@@ -5,6 +5,7 @@ types
 	public Utilizadores = set of Utilizador;
 	public Trabalhos = set of Trabalho;
 	public Escolaridade = <Secundario> | <Licenciatura> | <Mestrado> | <Doutoramento>;
+	
 values
 -- TODO Define values here
 instance variables
@@ -18,6 +19,7 @@ operations
 	--Construtor
 	public Hokify: () ==> Hokify
 	Hokify()==(return self);
+	
 	
 	--Adicionar Utilizadores
 	public addUtilizadores: Utilizador ==> ()
@@ -47,8 +49,135 @@ operations
 	
 	-- Retorna os trabalhos por nome
 	public pure getTrabalhosPorNome: String ==> Trabalhos
-	getTrabalhosPorNome(name) == (return {trabalhos | trabalhos in set trabalhos & trabalhos.nomeSemelhante(name)})
-	pre len name > 0;
+	getTrabalhosPorNome(nome) == (return {trabalhos | trabalhos in set trabalhos & trabalhos.nomeSemelhante(nome)})
+	pre len nome > 0;
+	
+	--Retorna os trabalhos por interesses
+	public pure getTrabalhosPorInteresses: String ==> Trabalhos
+	getTrabalhosPorInteresses(nome) == (
+		dcl results: Trabalhos := {};
+		for all tr in set trabalhos do
+			if nome in set tr.getInteresses() then
+				results := results union {tr};
+		return results;
+	);
+	
+	--Retorna os trabalhos por skills
+	public pure getTrabalhosPorSkills: String ==> Trabalhos
+	getTrabalhosPorSkills(nome) == (
+		dcl results: Trabalhos := {};
+		for all tr in set trabalhos do
+			if nome in set tr.getSkills() then
+				results := results union {tr};
+		return results;
+	);
+
+	--Retorna os trabalhos por Escolaridade
+	public pure getTrabalhosPorEscolaridade: Escolaridade ==> Trabalhos
+	getTrabalhosPorEscolaridade(nome) == (
+		dcl results: Trabalhos := {};
+		for all tr in set trabalhos do
+			if nome in set tr.getlistaEscolaridades() then
+				results := results union {tr};
+		return results;
+	);
+	
+	--Retorna os trabalhos por Utilizador (Escolaridade,Skills,interesses)
+	public pure getTrabalhosPorUtilizador: Utilizador ==> Trabalhos
+	getTrabalhosPorUtilizador(usr) == (
+		dcl results_escolaridade: Trabalhos := {};
+		dcl results_skills: Trabalhos := {};
+		dcl results_interesses: Trabalhos := {};
+		dcl trabalhos_temp: Trabalhos := {};
+		results_escolaridade := getTrabalhosPorEscolaridade(usr.getEscolaridade());
+		
+		for all skill in set usr.getSkills() do
+			trabalhos_temp := getTrabalhosPorSkills(skill);
+			for all skill_temp in set trabalhos_temp do
+				if skill_temp not in set results_skills then
+					results_skills := results_skills union {skill_temp};
+					
+		for all interesse in set usr.getInteresses() do
+			trabalhos_temp := getTrabalhosPorInteresses(interesse);
+			for all interesse_temp in set trabalhos_temp do
+				if interesse_temp not in set results_interesses then
+					results_interesses := results_interesses union {interesse_temp};
+		return (results_escolaridade inter results_skills inter results_interesses);
+	);
+	
+	--Retorna os trabalhos por pais
+	public pure getTrabalhosPorPais: String ==> Trabalhos
+	getTrabalhosPorPais(nome) == (
+		dcl results: Trabalhos := {};
+		for all tr in set trabalhos do
+			if nome = tr.getPais() then
+				results := results union {tr};
+		return results;
+	);
+	
+	--Retorna os trabalhos por localidade
+	public pure getTrabalhosPorLocalidade: String ==> Trabalhos
+	getTrabalhosPorLocalidade(nome) == (
+		dcl results: Trabalhos := {};
+		for all tr in set trabalhos do
+			if nome = tr.getLocalidade() then
+				results := results union {tr};
+		return results;
+	);
+	
+	--Retorna os utilizadres por interesses
+	public pure getUtilizadoresPorInteresses: String ==> Utilizadores
+	getUtilizadoresPorInteresses(nome) == (
+		dcl results: Utilizadores := {};
+		for all tr in set utilizadores do
+			if nome in set tr.getInteresses() then
+				results := results union {tr};
+		return results;
+	);
+	
+	--Retorna os utilizadres por skills
+	public pure getUtilizadoresPorSkills: String ==> Utilizadores
+	getUtilizadoresPorSkills(nome) == (
+		dcl results: Utilizadores := {};
+		for all tr in set utilizadores do
+			if nome in set tr.getSkills() then
+				results := results union {tr};
+		return results;
+	);
+
+	--Retorna os utilizadres por Escolaridade
+	public pure getUtilizadoresPorEscolaridade: Escolaridade ==> Utilizadores
+	getUtilizadoresPorEscolaridade(nome) == (
+		dcl results: Utilizadores := {};
+		for all tr in set utilizadores do
+			if nome in set tr.getlistaEscolaridades() then
+				results := results union {tr};
+		return results;
+	);
+	
+	--Retorna os utilizadores por Trabalhos (Escolaridade,Skills,interesses)
+	public pure getTrabalhosPorUtilizador: Trabalho ==> Utilizadores
+	getTrabalhosPorUtilizador(trab) == (
+		dcl results_escolaridade: Utilizadores := {};
+		dcl results_skills: Utilizadores := {};
+		dcl results_interesses: Utilizadores := {};
+		dcl utilizadores_temp: Utilizadores := {};
+		results_escolaridade := getUtilizadoresPorEscolaridade(trab.getEscolaridade());
+		
+		for all skill in set trab.getSkills() do
+			utilizadores_temp := getUtilizadoresPorSkills(skill);
+			for all skill_temp in set utilizadores_temp do
+				if skill_temp not in set results_skills then
+					results_skills := results_skills union {skill_temp};
+					
+		for all interesse in set trab.getInteresses() do
+			utilizadores_temp := getUtilizadoresPorInteresses(interesse);
+			for all interesse_temp in set utilizadores_temp do
+				if interesse_temp not in set results_interesses then
+					results_interesses := results_interesses union {interesse_temp};
+					
+		return (results_escolaridade inter results_skills inter results_interesses);
+	);
 	
 	-- Verifica se o utilizador existe por email ou telefone
 	public pure sameUser: Utilizador ==> bool

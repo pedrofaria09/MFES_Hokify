@@ -5,6 +5,7 @@ types
  public String = seq of char;
  public Sexo = <Masculino> | <Feminino>;
  public Escolaridade = <Secundario> | <Licenciatura> | <Mestrado> | <Doutoramento>;
+ public ListaEscolaridade = set of Escolaridade;
  public Interesses = set of String;
  public Skills = set of String;
  
@@ -21,11 +22,12 @@ instance variables
  private telefone: nat1;
  private pais: String;
  private localidade: String;
- private interesses: Interesses := {};
 (*@
 \label{Utilizador:24}
 @*)
+ private interesses: Interesses := {};
  private skills: Skills := {};
+ private listaEscolaridade: ListaEscolaridade := {};
  
 operations
 -- TODO Define operations here
@@ -37,80 +39,112 @@ operations
   email := emailC;
   sexo := sexoC;
   escolaridade := escolaridadeC;
-  idade := idadeC;
-  telefone := telefoneC;
 (*@
 \label{addInteresse:38}
 @*)
+  listaEscolaridades(escolaridade);
+  idade := idadeC;
+  telefone := telefoneC;
   pais := paisC;
   localidade := localidadeC;
   return self
- )
- post interesses = {} and
-   skills = {} and
 (*@
 \label{removeInteresse:44}
 @*)
+ )
+ post interesses = {} and
+   skills = {} and
    nome = nm and
    email = emailC and
    sexo = sexoC and
-   idade = idadeC and
-   telefone = telefoneC and
-   pais = paisC and
 (*@
 \label{getInteresses:50}
 @*)
+   idade = idadeC and
+   telefone = telefoneC and
+   pais = paisC and
    localidade = localidadeC;
- 
- -- Adicionar interesses
- public addInteresse: String ==> ()
- addInteresse(String) == interesses := interesses union {String}
- pre String not in set interesses
- post interesses = interesses~ union {String};
+   
+(*@
+\label{listaEscolaridades:55}
+@*)
+ public listaEscolaridades: Escolaridade ==> ()
+ listaEscolaridades(tipo)==(
 (*@
 \label{addSkills:57}
 @*)
+ if tipo = <Doutoramento> then (
+  listaEscolaridade := listaEscolaridade union {<Secundario>};
+  listaEscolaridade := listaEscolaridade union {<Licenciatura>};
+  listaEscolaridade := listaEscolaridade union {<Mestrado>};
+  listaEscolaridade := listaEscolaridade union {<Doutoramento>};
+ )elseif tipo = <Mestrado> then(
+(*@
+\label{removeSkills:63}
+@*)
+  listaEscolaridade := listaEscolaridade union {<Secundario>};
+  listaEscolaridade := listaEscolaridade union {<Licenciatura>};
+  listaEscolaridade := listaEscolaridade union {<Mestrado>};
+ )elseif tipo = <Licenciatura> then(
+  listaEscolaridade := listaEscolaridade union {<Secundario>};
+  listaEscolaridade := listaEscolaridade union {<Licenciatura>};
+(*@
+\label{getSkills:69}
+@*)
+ )else(
+  listaEscolaridade := listaEscolaridade union {<Secundario>};
+ );
+ );
+ 
+ -- Adicionar interesses
+ public addInteresse: String ==> ()
+(*@
+\label{getNome:76}
+@*)
+ addInteresse(String) == interesses := interesses union {String}
+ pre String not in set interesses
+ post interesses = interesses~ union {String};
  
  -- Remover interesses
  public removeInteresse: String ==> ()
  removeInteresse(String) == interesses := interesses \ {String}
  pre String in set interesses
  post interesses = interesses~ \ {String};
-(*@
-\label{removeSkills:63}
-@*)
  
+(*@
+\label{getIdade:86}
+@*)
  -- Retorna os interesses
  public pure getInteresses : () ==> Interesses
  getInteresses() ==
  (
   return interesses;
-(*@
-\label{getSkills:69}
-@*)
  );
  
+(*@
+\label{getTelefone:93}
+@*)
  -- Adicionar skills
  public addSkills: String ==> ()
  addSkills(String) == skills := skills union {String}
  pre String not in set skills
  post skills = skills~ union {String};
-(*@
-\label{getNome:76}
-@*)
  
  -- Remover skills
+(*@
+\label{getSexo:100}
+@*)
  public removeSkills: String ==> ()
  removeSkills(String) == skills := skills \ {String}
  pre String in set skills
+(*@
+\label{getEmail:103}
+@*)
  post skills = skills~ \ {String};
  
  -- Retorna as skills
  public pure getSkills : () ==> Skills
  getSkills() ==
-(*@
-\label{getIdade:86}
-@*)
  (
   return skills;
  );
@@ -118,30 +152,36 @@ operations
  -- Retorna o nome
  public pure getNome : () ==> String
  getNome() ==
-(*@
-\label{getTelefone:93}
-@*)
  (
   return nome;
+(*@
+\label{setNome:117}
+@*)
  );
  
  -- Retorna a idade
  public pure getIdade : () ==> nat1
  getIdade() ==
-(*@
-\label{getSexo:100}
-@*)
  (
+(*@
+\label{setEmail:123}
+@*)
+(*@
+\label{getPais:123}
+@*)
   return idade;
  );
-(*@
-\label{getEmail:103}
-@*)
  
  -- Retorna o telefone
  public pure getTelefone : () ==> nat1
  getTelefone() ==
+(*@
+\label{setTelefone:129}
+@*)
  (
+(*@
+\label{getLocalidade:130}
+@*)
   return telefone;
  );
  
@@ -151,51 +191,55 @@ operations
  (
   return email;
  );
-(*@
-\label{setNome:117}
-@*)
  
+(*@
+\label{getEscolaridade:140}
+@*)
  -- Retorna o sexo
  public pure getSexo : () ==> Sexo
  getSexo() ==
  (
   return sexo;
-(*@
-\label{setEmail:123}
-@*)
-(*@
-\label{getPais:123}
-@*)
  );
  
  -- Retorna o pais
  public pure getPais : () ==> String
  getPais() ==
  (
-(*@
-\label{setTelefone:129}
-@*)
   return pais;
-(*@
-\label{getLocalidade:130}
-@*)
  );
  
  -- Retorna a localidade
  public pure getLocalidade : () ==> String
  getLocalidade() ==
  (
+(*@
+\label{setPais:158}
+@*)
   return localidade;
  );
  
  -- Retorna a escolaridade
-(*@
-\label{getEscolaridade:140}
-@*)
  public pure getEscolaridade : () ==> Escolaridade
  getEscolaridade() ==
+(*@
+\label{setLocalidade:164}
+@*)
  (
   return escolaridade;
+ );
+ 
+ -- Retorna o listaEscolaridades
+(*@
+\label{getlistaEscolaridades:169}
+@*)
+ public pure getlistaEscolaridades : () ==> ListaEscolaridade
+(*@
+\label{setEscolaridade:170}
+@*)
+ getlistaEscolaridades() ==
+ (
+  return listaEscolaridade;
  );
  
  -- Editar Nome
@@ -210,27 +254,18 @@ operations
  pre newEmail <> undefined
  post email = newEmail;
  
-(*@
-\label{setPais:158}
-@*)
  -- Editar Telefone
  public setTelefone: nat1 ==> ()
  setTelefone(newTelefone) == telefone := newTelefone
  pre newTelefone <> undefined
  post telefone = newTelefone;
 
-(*@
-\label{setLocalidade:164}
-@*)
  -- Editar Pais
  public setPais: String ==> ()
  setPais(newPais) == pais := newPais
  pre newPais <> undefined
  post pais = newPais;
  
-(*@
-\label{setEscolaridade:170}
-@*)
  -- Editar Localidade
  public setLocalidade: String ==> ()
  setLocalidade(newLocalidade) == localidade := newLocalidade
@@ -257,50 +292,54 @@ end Utilizador
 Function or operation & Line & Coverage & Calls \\
 \hline
 \hline
-\hyperref[Utilizador:24]{Utilizador} & 24&100.0\% & 77 \\
+\hyperref[Utilizador:24]{Utilizador} & 24&100.0\% & 83 \\
 \hline
-\hyperref[addInteresse:38]{addInteresse} & 38&100.0\% & 42 \\
+\hyperref[addInteresse:38]{addInteresse} & 38&100.0\% & 102 \\
 \hline
-\hyperref[addSkills:57]{addSkills} & 57&100.0\% & 42 \\
+\hyperref[addSkills:57]{addSkills} & 57&100.0\% & 102 \\
 \hline
-\hyperref[getEmail:103]{getEmail} & 103&100.0\% & 94 \\
+\hyperref[getEmail:103]{getEmail} & 103&100.0\% & 140 \\
 \hline
-\hyperref[getEscolaridade:140]{getEscolaridade} & 140&100.0\% & 63 \\
+\hyperref[getEscolaridade:140]{getEscolaridade} & 140&100.0\% & 85 \\
 \hline
-\hyperref[getIdade:86]{getIdade} & 86&100.0\% & 21 \\
+\hyperref[getIdade:86]{getIdade} & 86&100.0\% & 19 \\
 \hline
-\hyperref[getInteresses:50]{getInteresses} & 50&100.0\% & 42 \\
+\hyperref[getInteresses:50]{getInteresses} & 50&100.0\% & 226 \\
 \hline
-\hyperref[getLocalidade:130]{getLocalidade} & 130&100.0\% & 42 \\
+\hyperref[getLocalidade:130]{getLocalidade} & 130&100.0\% & 38 \\
 \hline
-\hyperref[getNome:76]{getNome} & 76&100.0\% & 42 \\
+\hyperref[getNome:76]{getNome} & 76&100.0\% & 38 \\
 \hline
-\hyperref[getPais:123]{getPais} & 123&100.0\% & 42 \\
+\hyperref[getPais:123]{getPais} & 123&100.0\% & 38 \\
 \hline
-\hyperref[getSexo:100]{getSexo} & 100&100.0\% & 21 \\
+\hyperref[getSexo:100]{getSexo} & 100&100.0\% & 19 \\
 \hline
-\hyperref[getSkills:69]{getSkills} & 69&100.0\% & 42 \\
+\hyperref[getSkills:69]{getSkills} & 69&100.0\% & 226 \\
 \hline
-\hyperref[getTelefone:93]{getTelefone} & 93&100.0\% & 70 \\
+\hyperref[getTelefone:93]{getTelefone} & 93&100.0\% & 104 \\
 \hline
-\hyperref[removeInteresse:44]{removeInteresse} & 44&100.0\% & 21 \\
+\hyperref[getlistaEscolaridades:169]{getlistaEscolaridades} & 169&100.0\% & 141 \\
 \hline
-\hyperref[removeSkills:63]{removeSkills} & 63&100.0\% & 21 \\
+\hyperref[listaEscolaridades:55]{listaEscolaridades} & 55&100.0\% & 8 \\
 \hline
-\hyperref[setEmail:123]{setEmail} & 123&100.0\% & 21 \\
+\hyperref[removeInteresse:44]{removeInteresse} & 44&100.0\% & 64 \\
 \hline
-\hyperref[setEscolaridade:170]{setEscolaridade} & 170&100.0\% & 42 \\
+\hyperref[removeSkills:63]{removeSkills} & 63&100.0\% & 32 \\
 \hline
-\hyperref[setLocalidade:164]{setLocalidade} & 164&100.0\% & 21 \\
+\hyperref[setEmail:123]{setEmail} & 123&100.0\% & 19 \\
 \hline
-\hyperref[setNome:117]{setNome} & 117&100.0\% & 21 \\
+\hyperref[setEscolaridade:170]{setEscolaridade} & 170&100.0\% & 38 \\
 \hline
-\hyperref[setPais:158]{setPais} & 158&100.0\% & 21 \\
+\hyperref[setLocalidade:164]{setLocalidade} & 164&100.0\% & 19 \\
 \hline
-\hyperref[setTelefone:129]{setTelefone} & 129&100.0\% & 21 \\
+\hyperref[setNome:117]{setNome} & 117&100.0\% & 19 \\
+\hline
+\hyperref[setPais:158]{setPais} & 158&100.0\% & 19 \\
+\hline
+\hyperref[setTelefone:129]{setTelefone} & 129&100.0\% & 19 \\
 \hline
 \hline
-Utilizador.vdmpp & & 100.0\% & 829 \\
+Utilizador.vdmpp & & 100.0\% & 1598 \\
 \hline
 \end{longtable}
 

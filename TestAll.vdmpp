@@ -104,11 +104,13 @@ TestHokify() ==
 (
 	dcl hokify : Hokify := new Hokify();
 	dcl utilizador : Utilizador := new Utilizador("Pedro","email@email.com",<Masculino>,<Licenciatura>,"Portugal","Porto",27,123456789);
-	dcl trabalho : Trabalho := new Trabalho("Programador de java","Google","google@google.pt",<Licenciatura>,123456789,"Portugal","Porto");
+	dcl utilizador2 : Utilizador := new Utilizador("Fabiola","gmail@gmail.com",<Feminino>,<Doutoramento>,"Portugal","Lisboa",26,123123123);
+	dcl utilizador3 : Utilizador := new Utilizador("Francisca","asd@asd.com",<Feminino>,<Secundario>,"Portugal","Lisboa",26,123132323);
 	dcl sameuser : Utilizador := new Utilizador("Pedro","email@email.com",<Masculino>,<Licenciatura>,"Portugal","Porto",27,123456789);
+	dcl trabalho : Trabalho := new Trabalho("Programador de java","Google","google@google.pt",<Licenciatura>,123456789,"Portugal","Porto");
+	dcl trabalho2 : Trabalho := new Trabalho("Programador de c++","Apple","apple@apple.pt",<Doutoramento>,4562343434,"Portugal","Lisboa");
+	dcl trabalho3 : Trabalho := new Trabalho("Programador de php","Apple2","apple2@apple.pt",<Secundario>,357864,"Portugal","Funchal");
 	dcl sametrabalho : Trabalho := new Trabalho("Programador de java","Google","google@google.pt",<Licenciatura>,123456789,"Portugal","Porto");
-	dcl utilizador2 : Utilizador := new Utilizador("Fabiola","gmail@gmail.com",<Feminino>,<Mestrado>,"Portugal","Lisboa",26,123123123);
-	dcl trabalho2 : Trabalho := new Trabalho("Programador de c++","Apple","apple@apple.pt",<Licenciatura>,4562343434,"Portugal","Lisboa");
 	
 	hokify.addUtilizadores(utilizador);
 	hokify.addTrabalhos(trabalho);
@@ -120,15 +122,83 @@ TestHokify() ==
 	assertEqual(card hokify.getUtilizadores(),2);
 	assertEqual(card hokify.getTrabalhos(),2);
 	
+	hokify.addUtilizadores(utilizador3);
+	hokify.addTrabalhos(trabalho3);
+	
 	--Deve falhar pois estamos adicionando um utilizador igual
 	--hokify.addUtilizadores(sameuser);
 	--hokify.addTrabalhos(sametrabalho);
 	assertTrue(not hokify.sameUser(sameuser));
 	assertTrue(not hokify.sameTrabalho(sametrabalho));
 	
-	assertEqual(hokify.getTrabalhosPorNome("Programador"),{trabalho,trabalho2});
+	-- Testes para a pesquisa por nome do trabalho em que retorne os trabalhos
+	assertEqual(hokify.getTrabalhosPorNome("Programador"),{trabalho,trabalho2,trabalho3});
 	assertEqual(hokify.getTrabalhosPorNome("java"),{trabalho});
 	assertEqual(hokify.getTrabalhosPorNome("c++"),{trabalho2});
+	
+	-- Testes para a pesquisa por interesses em que retorne os trabalhos
+	trabalho.addInteresse("Informatica");
+	trabalho.addInteresse("Cinema");
+	assertEqual(hokify.getTrabalhosPorInteresses("Informatica"),{trabalho});
+	assertEqual(hokify.getTrabalhosPorInteresses("Cinema"),{trabalho});
+	assertTrue(not (hokify.getTrabalhosPorInteresses("Cinema")={trabalho2}));
+	
+	-- Testes para a pesquisa por skills em que retorne os trabalhos
+	trabalho.addSkills("Java");
+	trabalho.addSkills("VDM");
+	assertEqual(hokify.getTrabalhosPorSkills("Java"),{trabalho});
+	assertEqual(hokify.getTrabalhosPorSkills("VDM"),{trabalho});
+	assertTrue(not (hokify.getTrabalhosPorSkills("Java")={trabalho2}));
+	
+	-- Testes para a pesquisa por localidade em que retorne os trabalhos
+	assertEqual(hokify.getTrabalhosPorLocalidade("Porto"),{trabalho});
+	assertEqual(hokify.getTrabalhosPorLocalidade("Lisboa"),{trabalho2});
+	
+	-- Testes para a pesquisa por pais em que retorne os trabalhos
+	assertEqual(hokify.getTrabalhosPorPais("Portugal"),{trabalho,trabalho2,trabalho3});
+	
+	-- Testes para a escolaridade em que retorne os trabalhos
+	assertEqual(hokify.getTrabalhosPorEscolaridade(<Secundario>),{trabalho3});
+	assertEqual(hokify.getTrabalhosPorEscolaridade(<Licenciatura>),{trabalho,trabalho3});
+	assertEqual(hokify.getTrabalhosPorEscolaridade(<Mestrado>),{trabalho,trabalho3});
+	assertEqual(hokify.getTrabalhosPorEscolaridade(<Doutoramento>),{trabalho,trabalho2,trabalho3});
+	
+	-- Testes para procurar por trabalhos para um utilizador
+	utilizador.addInteresse("Informatica");
+	utilizador.addInteresse("Cinema");
+	utilizador.addSkills("Java");
+	utilizador.addSkills("VDM");
+	assertEqual(hokify.getTrabalhosPorUtilizador(utilizador),{trabalho});
+	
+	utilizador2.addInteresse("Informatica");
+	utilizador2.addInteresse("Cinema");
+	utilizador2.addSkills("Java");
+	utilizador2.addSkills("VDM");
+	assertEqual(hokify.getTrabalhosPorUtilizador(utilizador2),{trabalho});
+	
+	-- Testes para a pesquisa por interesses em que retorne os utilizadores
+	assertEqual(hokify.getUtilizadoresPorInteresses("Informatica"),{utilizador,utilizador2});
+	utilizador2.removeInteresse("Cinema");
+	assertEqual(hokify.getUtilizadoresPorInteresses("Cinema"),{utilizador});
+	assertTrue(not (hokify.getUtilizadoresPorInteresses("Cinema")={}));
+	
+	-- Testes para a pesquisa por skills em que retorne os utilizadores
+	assertEqual(hokify.getUtilizadoresPorSkills("Java"),{utilizador,utilizador2});
+	utilizador2.removeSkills("VDM");
+	assertEqual(hokify.getUtilizadoresPorSkills("VDM"),{utilizador});
+	assertTrue(not (hokify.getUtilizadoresPorSkills("VDM")={}));
+	
+	-- Testes para a escolaridade em que retorne os utilizadores
+	assertEqual(hokify.getUtilizadoresPorEscolaridade(<Secundario>),{utilizador,utilizador2,utilizador3});
+	assertEqual(hokify.getUtilizadoresPorEscolaridade(<Licenciatura>),{utilizador,utilizador2});
+	assertEqual(hokify.getUtilizadoresPorEscolaridade(<Mestrado>),{utilizador2});
+	assertEqual(hokify.getUtilizadoresPorEscolaridade(<Doutoramento>),{utilizador2});
+	
+	-- Testes para procurar por utilizadores para um trabalho
+	assertEqual(hokify.getTrabalhosPorUtilizador(trabalho),{utilizador});
+	utilizador2.addInteresse("Cinema");
+	utilizador2.addSkills("VDM");
+	assertEqual(hokify.getTrabalhosPorUtilizador(trabalho),{utilizador,utilizador2});
 	return;
 );
 

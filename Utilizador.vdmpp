@@ -4,6 +4,7 @@ types
 	public String = seq of char;
 	public Sexo = <Masculino> | <Feminino>;
 	public Escolaridade = <Secundario> | <Licenciatura> | <Mestrado> | <Doutoramento>;
+	public ListaEscolaridade = set of Escolaridade;
 	public Interesses = set of String;
 	public Skills = set of String;
 	
@@ -22,6 +23,7 @@ instance variables
 	private localidade: String;
 	private interesses: Interesses := {};
 	private skills: Skills := {};
+	private listaEscolaridade: ListaEscolaridade := {};
 	
 operations
 -- TODO Define operations here
@@ -33,6 +35,7 @@ operations
 		email := emailC;
 		sexo := sexoC;
 		escolaridade := escolaridadeC;
+		listaEscolaridades(escolaridade);
 		idade := idadeC;
 		telefone := telefoneC;
 		pais := paisC;
@@ -48,6 +51,25 @@ operations
 			telefone = telefoneC and
 			pais = paisC and
 			localidade = localidadeC;
+			
+	public listaEscolaridades: Escolaridade ==> ()
+	listaEscolaridades(tipo)==(
+	if tipo = <Doutoramento> then (
+		listaEscolaridade := listaEscolaridade union {<Secundario>};
+		listaEscolaridade := listaEscolaridade union {<Licenciatura>};
+		listaEscolaridade := listaEscolaridade union {<Mestrado>};
+		listaEscolaridade := listaEscolaridade union {<Doutoramento>};
+	)elseif tipo = <Mestrado> then(
+		listaEscolaridade := listaEscolaridade union {<Secundario>};
+		listaEscolaridade := listaEscolaridade union {<Licenciatura>};
+		listaEscolaridade := listaEscolaridade union {<Mestrado>};
+	)elseif tipo = <Licenciatura> then(
+		listaEscolaridade := listaEscolaridade union {<Secundario>};
+		listaEscolaridade := listaEscolaridade union {<Licenciatura>};
+	)else(
+		listaEscolaridade := listaEscolaridade union {<Secundario>};
+	);
+	);
 	
 	-- Adicionar interesses
 	public addInteresse: String ==> ()
@@ -141,6 +163,13 @@ operations
 	getEscolaridade() ==
 	(
 		return escolaridade;
+	);
+	
+	-- Retorna o listaEscolaridades
+	public pure getlistaEscolaridades : () ==> ListaEscolaridade
+	getlistaEscolaridades() ==
+	(
+		return listaEscolaridade;
 	);
 	
 	-- Editar Nome
