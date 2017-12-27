@@ -11,22 +11,22 @@ values
 -- TODO Define values here
 instance variables
 -- TODO Define instance variables here
-	private nome: String;
-	private entidade: String;
-	private email: String;
+	private nome: seq of char;
+	private entidade: seq of char;
+	private email: seq of char;
 	private escolaridade: Escolaridade;
 	private telefone: nat1;
-	private pais: String;
-	private localidade: String;
-	private interesses: Interesses := {};
-	private skills: Skills := {};
+	private pais: seq of char;
+	private localidade: seq of char;
+	private interesses: set of String := {};
+	private skills: set of String := {};
 	private listaEscolaridade: ListaEscolaridade := {};
 	
 operations
 -- TODO Define operations here
 
 	--Construtor
-	public Trabalho: String * String * String * Escolaridade * nat1 * String * String ==> Trabalho
+	public Trabalho: seq of char * seq of char * seq of char * Escolaridade * nat1 * seq of char * seq of char ==> Trabalho
 	Trabalho(nomeC,entidadeC,emailC,escolaridadeC,telefoneC,paisC,localidadeC) == (
 		nome := nomeC;
 		entidade := entidadeC;
@@ -47,7 +47,8 @@ operations
 			telefone = telefoneC and
 			pais = paisC and
 			localidade = localidadeC;
-		
+	
+	-- Adiciona uma lista com as escolaridades no qual possui
 	public listaEscolaridades: Escolaridade ==> ()
 	listaEscolaridades(tipo)==(
 	if tipo = <Secundario> then (
@@ -67,57 +68,57 @@ operations
 	););
 
 	-- Adicionar interesses
-	public addInteresse: String ==> ()
+	public addInteresse: seq of char ==> ()
 	addInteresse(String) == interesses := interesses union {String}
 	pre String not in set interesses
 	post interesses = interesses~ union {String};
 	
 	-- Remover interesses
-	public removeInteresse: String ==> ()
+	public removeInteresse: seq of char ==> ()
 	removeInteresse(String) == interesses := interesses \ {String}
 	pre String in set interesses
 	post interesses = interesses~ \ {String};
 	
 	-- Retorna os interesses
-	public pure getInteresses : () ==> Interesses
+	public pure getInteresses : () ==> set of String
 	getInteresses() ==
 	(
 		return interesses;
 	);
 	
 	-- Adicionar skills
-	public addSkills: String ==> ()
+	public addSkills: seq of char ==> ()
 	addSkills(String) == skills := skills union {String}
 	pre String not in set skills
 	post skills = skills~ union {String};
 	
 	-- Remover skills
-	public removeSkills: String ==> ()
+	public removeSkills: seq of char ==> ()
 	removeSkills(String) == skills := skills \ {String}
 	pre String in set skills
 	post skills = skills~ \ {String};
 	
 	-- Retorna as skills
-	public pure getSkills : () ==> Skills
+	public pure getSkills : () ==> set of String
 	getSkills() ==
 	(
 		return skills;
 	);
 	
 	-- Retorna o nome
-	public pure getNome : () ==> String
+	public pure getNome : () ==> seq of char
 	getNome() ==
 	(
 		return nome;
 	);
 	-- Retorna o entidade
-	public pure getEntidade : () ==> String
+	public pure getEntidade : () ==> seq of char
 	getEntidade() ==
 	(
 		return entidade;
 	);
 	-- Retorna o email
-	public pure getEmail : () ==> String
+	public pure getEmail : () ==> seq of char
 	getEmail() ==
 	(
 		return email;
@@ -135,13 +136,13 @@ operations
 		return telefone;
 	);
 	-- Retorna o pais
-	public pure getPais : () ==> String
+	public pure getPais : () ==> seq of char
 	getPais() ==
 	(
 		return pais;
 	);
 	-- Retorna o localidade
-	public pure getLocalidade : () ==> String
+	public pure getLocalidade : () ==> seq of char
 	getLocalidade() ==
 	(
 		return localidade;
@@ -154,19 +155,19 @@ operations
 	);
 	
 	-- Editar Nome
-	public setNome: String ==> ()
+	public setNome: seq of char ==> ()
 	setNome(newName) == nome := newName
 	pre newName <> undefined
 	post nome = newName;
 	
 	-- Editar Entidade
-	public setEntidade: String ==> ()
+	public setEntidade: seq of char ==> ()
 	setEntidade(newEntidade) == entidade := newEntidade
 	pre newEntidade <> undefined
 	post entidade = newEntidade;
 	
 	-- Editar Email
-	public setEmail: String ==> ()
+	public setEmail: seq of char ==> ()
 	setEmail(newEmail) == email := newEmail
 	pre newEmail <> undefined
 	post email = newEmail;
@@ -178,13 +179,13 @@ operations
 	post telefone = newTelefone;
 
 	-- Editar Pais
-	public setPais: String ==> ()
+	public setPais: seq of char ==> ()
 	setPais(newPais) == pais := newPais
 	pre newPais <> undefined
 	post pais = newPais;
 	
 	-- Editar Localidade
-	public setLocalidade: String ==> ()
+	public setLocalidade: seq of char ==> ()
 	setLocalidade(newLocalidade) == localidade := newLocalidade
 	pre newLocalidade <> undefined
 	post localidade = newLocalidade;
@@ -195,7 +196,7 @@ operations
 	pre newEscolaridade <> undefined
 	post escolaridade = newEscolaridade;
 	
-	public pure nomeSemelhante: String ==> bool
+	public pure nomeSemelhante: seq of char ==> bool
 	nomeSemelhante(n) == (
 		dcl nameS: seq of char := nome;
 		dcl found: bool := false;

@@ -13,23 +13,23 @@ values
 
 instance variables
 -- TODO Define instance variables here
-	private nome: String;
-	private email: String;
+	private nome: seq of char;
+	private email: seq of char;
 	private sexo: Sexo;
 	private escolaridade: Escolaridade;
 	private idade: nat1;
 	private telefone: nat1;
-	private pais: String;
-	private localidade: String;
-	private interesses: Interesses := {};
-	private skills: Skills := {};
+	private pais: seq of char;
+	private localidade: seq of char;
+	private interesses: set of String := {};
+	private skills: set of String := {};
 	private listaEscolaridade: ListaEscolaridade := {};
 	
 operations
 -- TODO Define operations here
 
 	--Construtor
-	public Utilizador: String * String * Sexo * Escolaridade * String * String * nat1 * nat1 ==> Utilizador
+	public Utilizador: seq of char * seq of char * Sexo * Escolaridade * seq of char * seq of char * nat1 * nat1 ==> Utilizador
 	Utilizador(nm,emailC,sexoC,escolaridadeC,paisC,localidadeC,idadeC,telefoneC) == (
 		nome := nm;
 		email := emailC;
@@ -42,6 +42,7 @@ operations
 		localidade := localidadeC;
 		return self
 	)
+	pre verificarEscolaridade(escolaridadeC, idadeC)
 	post interesses = {} and
 			skills = {} and
 			nome = nm and
@@ -51,7 +52,23 @@ operations
 			telefone = telefoneC and
 			pais = paisC and
 			localidade = localidadeC;
-			
+	
+	-- Verifica se o utilizador tem idade para a escolaridade
+	public pure verificarEscolaridade: Escolaridade * nat1 ==> bool
+	verificarEscolaridade(escola, idd)==(
+	if (escola = <Secundario> and idd > 17) then(
+		return true;
+	)elseif(escola = <Licenciatura> and idd > 20) then(
+		return true;
+	)elseif(escola = <Mestrado> and idd > 22) then(
+		return true;
+	)elseif(escola = <Doutoramento> and idd > 24) then(
+		return true;
+	)else
+		return false;
+	)pre escolaridade <> undefined;
+	
+	-- Adiciona uma lista com as escolaridades no qual possui
 	public listaEscolaridades: Escolaridade ==> ()
 	listaEscolaridades(tipo)==(
 	if tipo = <Doutoramento> then (
@@ -69,48 +86,48 @@ operations
 	)else(
 		listaEscolaridade := listaEscolaridade union {<Secundario>};
 	);
-	);
+	)pre tipo <> undefined;
 	
 	-- Adicionar interesses
-	public addInteresse: String ==> ()
+	public addInteresse: seq of char ==> ()
 	addInteresse(String) == interesses := interesses union {String}
 	pre String not in set interesses
 	post interesses = interesses~ union {String};
 	
 	-- Remover interesses
-	public removeInteresse: String ==> ()
+	public removeInteresse: seq of char ==> ()
 	removeInteresse(String) == interesses := interesses \ {String}
 	pre String in set interesses
 	post interesses = interesses~ \ {String};
 	
 	-- Retorna os interesses
-	public pure getInteresses : () ==> Interesses
+	public pure getInteresses : () ==> set of String
 	getInteresses() ==
 	(
 		return interesses;
 	);
 	
 	-- Adicionar skills
-	public addSkills: String ==> ()
+	public addSkills: seq of char ==> ()
 	addSkills(String) == skills := skills union {String}
 	pre String not in set skills
 	post skills = skills~ union {String};
 	
 	-- Remover skills
-	public removeSkills: String ==> ()
+	public removeSkills: seq of char ==> ()
 	removeSkills(String) == skills := skills \ {String}
 	pre String in set skills
 	post skills = skills~ \ {String};
 	
 	-- Retorna as skills
-	public pure getSkills : () ==> Skills
+	public pure getSkills : () ==> set of String
 	getSkills() ==
 	(
 		return skills;
 	);
 	
 	-- Retorna o nome
-	public pure getNome : () ==> String
+	public pure getNome : () ==> seq of char
 	getNome() ==
 	(
 		return nome;
@@ -131,7 +148,7 @@ operations
 	);
 	
 	-- Retorna o email
-	public pure getEmail : () ==> String
+	public pure getEmail : () ==> seq of char
 	getEmail() ==
 	(
 		return email;
@@ -145,14 +162,14 @@ operations
 	);
 	
 	-- Retorna o pais
-	public pure getPais : () ==> String
+	public pure getPais : () ==> seq of char
 	getPais() ==
 	(
 		return pais;
 	);
 	
 	-- Retorna a localidade
-	public pure getLocalidade : () ==> String
+	public pure getLocalidade : () ==> seq of char
 	getLocalidade() ==
 	(
 		return localidade;
@@ -173,13 +190,13 @@ operations
 	);
 	
 	-- Editar Nome
-	public setNome: String ==> ()
+	public setNome: seq of char ==> ()
 	setNome(newName) == nome := newName
 	pre newName <> undefined
 	post nome = newName;
 	
 	-- Editar Email
-	public setEmail: String ==> ()
+	public setEmail: seq of char ==> ()
 	setEmail(newEmail) == email := newEmail
 	pre newEmail <> undefined
 	post email = newEmail;
@@ -191,13 +208,13 @@ operations
 	post telefone = newTelefone;
 
 	-- Editar Pais
-	public setPais: String ==> ()
+	public setPais: seq of char ==> ()
 	setPais(newPais) == pais := newPais
 	pre newPais <> undefined
 	post pais = newPais;
 	
 	-- Editar Localidade
-	public setLocalidade: String ==> ()
+	public setLocalidade: seq of char ==> ()
 	setLocalidade(newLocalidade) == localidade := newLocalidade
 	pre newLocalidade <> undefined
 	post localidade = newLocalidade;
