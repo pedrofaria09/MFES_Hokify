@@ -1,0 +1,274 @@
+\begin{vdmpp}[breaklines=true]
+class TestAll is subclass of MyTestCase
+types
+-- TODO Define types here
+values
+-- TODO Define values here
+instance variables
+-- TODO Define instance variables here
+operations
+-- TODO Define operations here
+(*@
+\label{TestPlayerFirst:10}
+@*)
+(*@
+\label{TestPlayerFirst:10}
+@*)
+public TestPlayerFirst :() ==> ()
+TestPlayerFirst() ==
+(
+ dcl user : Utilizador := new Utilizador("Pedro","email@email.com",<Masculino>,<Licenciatura>,"Portugal","Porto",27,123456789);
+ user.addInteresse("Informatica");
+ user.addInteresse("Cinema");
+ user.addSkills("Java");
+ user.addSkills("VDM");
+ 
+ assertEqual(user.getNome(),"Pedro");
+ assertEqual(user.getEmail(),"email@email.com");
+ assertEqual(user.getSexo(),<Masculino>);
+ assertEqual(user.getEscolaridade(),<Licenciatura>);
+ assertEqual(user.getPais(),"Portugal");
+ assertEqual(user.getLocalidade(),"Porto");
+ assertEqual(user.getIdade(),27);
+ assertEqual(user.getTelefone(),123456789);
+ assertEqual(user.getInteresses(),{"Informatica","Cinema"});
+ assertEqual(user.getSkills(),{"Java","VDM"});
+ 
+ user.removeInteresse("Cinema");
+ assertEqual(user.getInteresses(),{"Informatica"});
+ 
+ user.removeSkills("VDM");
+ assertEqual(user.getSkills(),{"Java"});
+ 
+ user.setNome("Pedro Faria");
+(*@
+\label{main:37}
+@*)
+ user.setEmail("PedroFaria@gmail.com");
+ user.setPais("Espanha");
+ user.setLocalidade("Madrid");
+ user.setEscolaridade(<Mestrado>);
+ user.setTelefone(987654321);
+ user.setEscolaridade(<Mestrado>);
+ assertEqual(user.getNome(),"Pedro Faria");
+ assertEqual(user.getEmail(),"PedroFaria@gmail.com");
+ assertEqual(user.getPais(),"Espanha");
+ assertEqual(user.getLocalidade(),"Madrid");
+ assertEqual(user.getEscolaridade(),<Mestrado>);
+ assertEqual(user.getTelefone(),987654321);
+ assertEqual(user.getEscolaridade(),<Mestrado>);
+(*@
+\label{TestTrabalhoFirst:50}
+@*)
+ 
+ --deve falhar pois estamos adicionando um duplicado
+ --user.addInteresse("Informatica");
+ --user.addSkills("Java");
+ 
+ return;
+);
+
+
+(*@
+\label{TestTrabalhoFirst:59}
+@*)
+public TestTrabalhoFirst :() ==> ()
+TestTrabalhoFirst() ==
+(
+ dcl trabalho : Trabalho := new Trabalho("Programador de java","Google","google@google.pt",<Licenciatura>,123456789,"Portugal","Porto");
+ trabalho.addInteresse("Informatica");
+ trabalho.addInteresse("Cinema");
+ trabalho.addSkills("Java");
+ trabalho.addSkills("VDM");
+ 
+ assertEqual(trabalho.getNome(),"Programador de java");
+ assertEqual(trabalho.getEntidade(), "Google");
+ assertEqual(trabalho.getEmail(),"google@google.pt");
+ assertEqual(trabalho.getEscolaridade(),<Licenciatura>);
+ assertEqual(trabalho.getTelefone(),123456789);
+ assertEqual(trabalho.getPais(),"Portugal");
+ assertEqual(trabalho.getLocalidade(),"Porto");
+ assertEqual(trabalho.getInteresses(),{"Informatica","Cinema"});
+ assertEqual(trabalho.getSkills(),{"Java","VDM"});
+ 
+ trabalho.removeInteresse("Cinema");
+ assertEqual(trabalho.getInteresses(),{"Informatica"});
+ 
+ trabalho.removeSkills("VDM");
+ assertEqual(trabalho.getSkills(),{"Java"});
+ 
+ trabalho.setNome("Programador de C++");
+ trabalho.setEntidade("apple");
+ trabalho.setEmail("apple@apple.pt");
+ trabalho.setPais("Espanha");
+ trabalho.setLocalidade("Madrid");
+ trabalho.setTelefone(987654321);
+ trabalho.setEscolaridade(<Mestrado>);
+ assertEqual(trabalho.getNome(),"Programador de C++");
+ assertEqual(trabalho.getEmail(),"apple@apple.pt");
+ assertEqual(trabalho.getPais(),"Espanha");
+ assertEqual(trabalho.getLocalidade(),"Madrid");
+ assertEqual(trabalho.getTelefone(),987654321);
+ assertEqual(trabalho.getEscolaridade(),<Mestrado>);
+
+ return;
+);
+
+(*@
+\label{main:101}
+@*)
+
+(*@
+\label{TestHokify:102}
+@*)
+public TestHokify :() ==> ()
+TestHokify() ==
+(
+ dcl hokify : Hokify := new Hokify();
+ dcl utilizador : Utilizador := new Utilizador("Pedro","email@email.com",<Masculino>,<Licenciatura>,"Portugal","Porto",27,123456789);
+ dcl utilizador2 : Utilizador := new Utilizador("Fabiola","gmail@gmail.com",<Feminino>,<Doutoramento>,"Portugal","Lisboa",26,123123123);
+ dcl utilizador3 : Utilizador := new Utilizador("Francisca","asd@asd.com",<Feminino>,<Secundario>,"Portugal","Lisboa",26,123132323);
+ dcl sameuser : Utilizador := new Utilizador("Pedro","email@email.com",<Masculino>,<Licenciatura>,"Portugal","Porto",27,123456789);
+ dcl trabalho : Trabalho := new Trabalho("Programador de java","Google","google@google.pt",<Licenciatura>,123456789,"Portugal","Porto");
+ dcl trabalho2 : Trabalho := new Trabalho("Programador de c++","Apple","apple@apple.pt",<Doutoramento>,4562343434,"Portugal","Lisboa");
+ dcl trabalho3 : Trabalho := new Trabalho("Programador de php","Apple2","apple2@apple.pt",<Secundario>,357864,"Portugal","Funchal");
+ dcl sametrabalho : Trabalho := new Trabalho("Programador de java","Google","google@google.pt",<Licenciatura>,123456789,"Portugal","Porto");
+ 
+ hokify.addUtilizadores(utilizador);
+ hokify.addTrabalhos(trabalho);
+ assertEqual(card hokify.getUtilizadores(),1);
+ assertEqual(card hokify.getTrabalhos(),1);
+ 
+ hokify.addUtilizadores(utilizador2);
+ hokify.addTrabalhos(trabalho2);
+ assertEqual(card hokify.getUtilizadores(),2);
+ assertEqual(card hokify.getTrabalhos(),2);
+ 
+ hokify.addUtilizadores(utilizador3);
+ hokify.addTrabalhos(trabalho3);
+ 
+ --Deve falhar pois estamos adicionando um utilizador igual
+ --hokify.addUtilizadores(sameuser);
+ --hokify.addTrabalhos(sametrabalho);
+ assertTrue(not hokify.sameUser(sameuser));
+ assertTrue(not hokify.sameTrabalho(sametrabalho));
+ 
+ -- Testes para a pesquisa por nome do trabalho em que retorne os trabalhos
+ assertEqual(hokify.getTrabalhosPorNome("Programador"),{trabalho,trabalho2,trabalho3});
+ assertEqual(hokify.getTrabalhosPorNome("java"),{trabalho});
+ assertEqual(hokify.getTrabalhosPorNome("c++"),{trabalho2});
+ 
+ -- Testes para a pesquisa por interesses em que retorne os trabalhos
+ trabalho.addInteresse("Informatica");
+ trabalho.addInteresse("Cinema");
+ assertEqual(hokify.getTrabalhosPorInteresses("Informatica"),{trabalho});
+ assertEqual(hokify.getTrabalhosPorInteresses("Cinema"),{trabalho});
+ assertTrue(not (hokify.getTrabalhosPorInteresses("Cinema")={trabalho2}));
+ 
+ -- Testes para a pesquisa por skills em que retorne os trabalhos
+ trabalho.addSkills("Java");
+ trabalho.addSkills("VDM");
+ assertEqual(hokify.getTrabalhosPorSkills("Java"),{trabalho});
+ assertEqual(hokify.getTrabalhosPorSkills("VDM"),{trabalho});
+ assertTrue(not (hokify.getTrabalhosPorSkills("Java")={trabalho2}));
+ 
+ -- Testes para a pesquisa por localidade em que retorne os trabalhos
+ assertEqual(hokify.getTrabalhosPorLocalidade("Porto"),{trabalho});
+ assertEqual(hokify.getTrabalhosPorLocalidade("Lisboa"),{trabalho2});
+ 
+ -- Testes para a pesquisa por pais em que retorne os trabalhos
+ assertEqual(hokify.getTrabalhosPorPais("Portugal"),{trabalho,trabalho2,trabalho3});
+ 
+ -- Testes para a escolaridade em que retorne os trabalhos
+ assertEqual(hokify.getTrabalhosPorEscolaridade(<Secundario>),{trabalho3});
+ assertEqual(hokify.getTrabalhosPorEscolaridade(<Licenciatura>),{trabalho,trabalho3});
+ assertEqual(hokify.getTrabalhosPorEscolaridade(<Mestrado>),{trabalho,trabalho3});
+ assertEqual(hokify.getTrabalhosPorEscolaridade(<Doutoramento>),{trabalho,trabalho2,trabalho3});
+ 
+ -- Testes para procurar por trabalhos para um utilizador
+ utilizador.addInteresse("Informatica");
+ utilizador.addInteresse("Cinema");
+ utilizador.addSkills("Java");
+ utilizador.addSkills("VDM");
+ assertEqual(hokify.getTrabalhosPorUtilizador(utilizador),{trabalho});
+ 
+ utilizador2.addInteresse("Informatica");
+ utilizador2.addInteresse("Cinema");
+ utilizador2.addSkills("Java");
+ utilizador2.addSkills("VDM");
+ assertEqual(hokify.getTrabalhosPorUtilizador(utilizador2),{trabalho});
+ 
+ -- Testes para a pesquisa por interesses em que retorne os utilizadores
+ assertEqual(hokify.getUtilizadoresPorInteresses("Informatica"),{utilizador,utilizador2});
+ utilizador2.removeInteresse("Cinema");
+ assertEqual(hokify.getUtilizadoresPorInteresses("Cinema"),{utilizador});
+ assertTrue(not (hokify.getUtilizadoresPorInteresses("Cinema")={}));
+ 
+ -- Testes para a pesquisa por skills em que retorne os utilizadores
+ assertEqual(hokify.getUtilizadoresPorSkills("Java"),{utilizador,utilizador2});
+ utilizador2.removeSkills("VDM");
+ assertEqual(hokify.getUtilizadoresPorSkills("VDM"),{utilizador});
+ assertTrue(not (hokify.getUtilizadoresPorSkills("VDM")={}));
+ 
+ -- Testes para a escolaridade em que retorne os utilizadores
+ assertEqual(hokify.getUtilizadoresPorEscolaridade(<Secundario>),{utilizador,utilizador2,utilizador3});
+ assertEqual(hokify.getUtilizadoresPorEscolaridade(<Licenciatura>),{utilizador,utilizador2});
+ assertEqual(hokify.getUtilizadoresPorEscolaridade(<Mestrado>),{utilizador2});
+ assertEqual(hokify.getUtilizadoresPorEscolaridade(<Doutoramento>),{utilizador2});
+ 
+ -- Testes para procurar por utilizadores para um trabalho
+ assertEqual(hokify.getTrabalhosPorUtilizador(trabalho),{utilizador});
+ utilizador2.addInteresse("Cinema");
+ utilizador2.addSkills("VDM");
+ assertEqual(hokify.getTrabalhosPorUtilizador(trabalho),{utilizador,utilizador2});
+ return;
+);
+
+
+public static main: () ==> ()
+main() ==
+(
+ IO`print("TestPlayerFirst -> ");
+ new TestAll().TestPlayerFirst();
+ IO`println("Passed");
+ 
+ IO`print("TestTrabalhoFirst -> ");
+ new TestAll().TestTrabalhoFirst();
+ IO`println("Passed");
+ 
+ IO`print("TestHokify -> ");
+ new TestAll().TestHokify();
+ IO`println("Passed");
+);
+
+functions
+-- TODO Define functiones here
+traces
+-- TODO Define Combinatorial Test Traces here
+end TestAll
+\end{vdmpp}
+\bigskip
+\begin{longtable}{|l|r|r|r|}
+\hline
+Function or operation & Line & Coverage & Calls \\
+\hline
+\hline
+\hyperref[TestHokify:102]{TestHokify} & 102&100.0\% & 7 \\
+\hline
+\hyperref[TestPlayerFirst:10]{TestPlayerFirst} & 10&100.0\% & 66 \\
+\hline
+\hyperref[TestPlayerFirst:10]{TestPlayerFirst} & 10&100.0\% & 66 \\
+\hline
+\hyperref[TestTrabalhoFirst:59]{TestTrabalhoFirst} & 59&100.0\% & 66 \\
+\hline
+\hyperref[TestTrabalhoFirst:50]{TestTrabalhoFirst} & 50&100.0\% & 66 \\
+\hline
+\hyperref[main:37]{main} & 37&100.0\% & 64 \\
+\hline
+\hyperref[main:101]{main} & 101&100.0\% & 7 \\
+\hline
+\hline
+TestAll.vdmpp & & 100.0\% & 342 \\
+\hline
+\end{longtable}
+

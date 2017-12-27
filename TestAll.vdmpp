@@ -16,6 +16,7 @@ TestPlayerFirst() ==
 	user.addSkills("Java");
 	user.addSkills("VDM");
 	
+	-- Testes simples de verificacao dos dados do utilização - Inserir, editar e eliminar.
 	assertEqual(user.getNome(),"Pedro");
 	assertEqual(user.getEmail(),"email@email.com");
 	assertEqual(user.getSexo(),<Masculino>);
@@ -65,6 +66,7 @@ TestTrabalhoFirst() ==
 	trabalho.addSkills("Java");
 	trabalho.addSkills("VDM");
 	
+	-- Testes simples de verificacao dos dados do trabalho - Inserir, editar e eliminar.
 	assertEqual(trabalho.getNome(),"Programador de java");
 	assertEqual(trabalho.getEntidade(), "Google");
 	assertEqual(trabalho.getEmail(),"google@google.pt");
