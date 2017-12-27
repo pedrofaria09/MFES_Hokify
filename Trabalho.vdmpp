@@ -47,7 +47,8 @@ operations
 			telefone = telefoneC and
 			pais = paisC and
 			localidade = localidadeC;
-		
+	
+	-- Adiciona uma lista com as escolaridades no qual possui
 	public listaEscolaridades: Escolaridade ==> ()
 	listaEscolaridades(tipo)==(
 	if tipo = <Secundario> then (

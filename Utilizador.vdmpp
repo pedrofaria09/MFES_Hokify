@@ -53,6 +53,7 @@ operations
 			pais = paisC and
 			localidade = localidadeC;
 	
+	-- Verifica se o utilizador tem idade para a escolaridade
 	public pure verificarEscolaridade: Escolaridade * nat1 ==> bool
 	verificarEscolaridade(escola, idd)==(
 	if (escola = <Secundario> and idd > 17) then(
@@ -67,6 +68,7 @@ operations
 		return false;
 	)pre escolaridade <> undefined;
 	
+	-- Adiciona uma lista com as escolaridades no qual possui
 	public listaEscolaridades: Escolaridade ==> ()
 	listaEscolaridades(tipo)==(
 	if tipo = <Doutoramento> then (
