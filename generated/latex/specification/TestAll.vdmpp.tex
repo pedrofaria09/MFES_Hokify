@@ -11,22 +11,20 @@ operations
 (*@
 \label{TestPlayerFirst:10}
 @*)
-(*@
-\label{TestPlayerFirst:10}
-@*)
 public TestPlayerFirst :() ==> ()
 TestPlayerFirst() ==
 (
- dcl user : Utilizador := new Utilizador("Pedro","email@email.com",<Masculino>,<Licenciatura>,"Portugal","Porto",27,123456789);
+ dcl user : Utilizador := new Utilizador("Pedro","email@email.com",<Masculino>,<Mestrado>,"Portugal","Porto",27,123456789);
  user.addInteresse("Informatica");
  user.addInteresse("Cinema");
  user.addSkills("Java");
  user.addSkills("VDM");
  
+ -- Testes simples de verificacao dos dados do utilização - Inserir, editar e eliminar.
  assertEqual(user.getNome(),"Pedro");
  assertEqual(user.getEmail(),"email@email.com");
  assertEqual(user.getSexo(),<Masculino>);
- assertEqual(user.getEscolaridade(),<Licenciatura>);
+ assertEqual(user.getEscolaridade(),<Mestrado>);
  assertEqual(user.getPais(),"Portugal");
  assertEqual(user.getLocalidade(),"Porto");
  assertEqual(user.getIdade(),27);
@@ -41,50 +39,45 @@ TestPlayerFirst() ==
  assertEqual(user.getSkills(),{"Java"});
  
  user.setNome("Pedro Faria");
-(*@
-\label{main:37}
-@*)
  user.setEmail("PedroFaria@gmail.com");
  user.setPais("Espanha");
  user.setLocalidade("Madrid");
- user.setEscolaridade(<Mestrado>);
+ user.setEscolaridade(<Secundario>);
  user.setTelefone(987654321);
- user.setEscolaridade(<Mestrado>);
  assertEqual(user.getNome(),"Pedro Faria");
  assertEqual(user.getEmail(),"PedroFaria@gmail.com");
  assertEqual(user.getPais(),"Espanha");
  assertEqual(user.getLocalidade(),"Madrid");
- assertEqual(user.getEscolaridade(),<Mestrado>);
+ assertEqual(user.getEscolaridade(),<Secundario>);
  assertEqual(user.getTelefone(),987654321);
- assertEqual(user.getEscolaridade(),<Mestrado>);
-(*@
-\label{TestTrabalhoFirst:50}
-@*)
  
  --deve falhar pois estamos adicionando um duplicado
  --user.addInteresse("Informatica");
  --user.addSkills("Java");
  
+ --Verifica a escolaridade de um curso
+ assertTrue(not (user.verificarEscolaridade(<Secundario>,10)));
  return;
 );
-
 
 (*@
 \label{TestTrabalhoFirst:59}
 @*)
+
 public TestTrabalhoFirst :() ==> ()
 TestTrabalhoFirst() ==
 (
- dcl trabalho : Trabalho := new Trabalho("Programador de java","Google","google@google.pt",<Licenciatura>,123456789,"Portugal","Porto");
+ dcl trabalho : Trabalho := new Trabalho("Programador de java","Google","google@google.pt",<Mestrado>,123456789,"Portugal","Porto");
  trabalho.addInteresse("Informatica");
  trabalho.addInteresse("Cinema");
  trabalho.addSkills("Java");
  trabalho.addSkills("VDM");
  
+ -- Testes simples de verificacao dos dados do trabalho - Inserir, editar e eliminar.
  assertEqual(trabalho.getNome(),"Programador de java");
  assertEqual(trabalho.getEntidade(), "Google");
  assertEqual(trabalho.getEmail(),"google@google.pt");
- assertEqual(trabalho.getEscolaridade(),<Licenciatura>);
+ assertEqual(trabalho.getEscolaridade(),<Mestrado>);
  assertEqual(trabalho.getTelefone(),123456789);
  assertEqual(trabalho.getPais(),"Portugal");
  assertEqual(trabalho.getLocalidade(),"Porto");
@@ -103,24 +96,21 @@ TestTrabalhoFirst() ==
  trabalho.setPais("Espanha");
  trabalho.setLocalidade("Madrid");
  trabalho.setTelefone(987654321);
- trabalho.setEscolaridade(<Mestrado>);
+ trabalho.setEscolaridade(<Secundario>);
  assertEqual(trabalho.getNome(),"Programador de C++");
  assertEqual(trabalho.getEmail(),"apple@apple.pt");
  assertEqual(trabalho.getPais(),"Espanha");
  assertEqual(trabalho.getLocalidade(),"Madrid");
  assertEqual(trabalho.getTelefone(),987654321);
- assertEqual(trabalho.getEscolaridade(),<Mestrado>);
+ assertEqual(trabalho.getEscolaridade(),<Secundario>);
 
  return;
 );
-
-(*@
-\label{main:101}
-@*)
-
 (*@
 \label{TestHokify:102}
 @*)
+
+
 public TestHokify :() ==> ()
 TestHokify() ==
 (
@@ -221,6 +211,16 @@ TestHokify() ==
  utilizador2.addInteresse("Cinema");
  utilizador2.addSkills("VDM");
  assertEqual(hokify.getTrabalhosPorUtilizador(trabalho),{utilizador,utilizador2});
+ 
+ assertEqual(card hokify.getUtilizadores(),3);
+(*@
+\label{main:206}
+@*)
+ assertEqual(card hokify.getTrabalhos(),3);
+ hokify.removeUtilizadores(utilizador2);
+ hokify.removeTrabalhos(trabalho2);
+ assertEqual(card hokify.getUtilizadores(),2);
+ assertEqual(card hokify.getTrabalhos(),2);
  return;
 );
 
@@ -253,22 +253,16 @@ end TestAll
 Function or operation & Line & Coverage & Calls \\
 \hline
 \hline
-\hyperref[TestHokify:102]{TestHokify} & 102&100.0\% & 7 \\
+\hyperref[TestHokify:102]{TestHokify} & 102&100.0\% & 3 \\
 \hline
-\hyperref[TestPlayerFirst:10]{TestPlayerFirst} & 10&100.0\% & 66 \\
+\hyperref[TestPlayerFirst:10]{TestPlayerFirst} & 10&100.0\% & 4 \\
 \hline
-\hyperref[TestPlayerFirst:10]{TestPlayerFirst} & 10&100.0\% & 66 \\
+\hyperref[TestTrabalhoFirst:59]{TestTrabalhoFirst} & 59&100.0\% & 4 \\
 \hline
-\hyperref[TestTrabalhoFirst:59]{TestTrabalhoFirst} & 59&100.0\% & 66 \\
-\hline
-\hyperref[TestTrabalhoFirst:50]{TestTrabalhoFirst} & 50&100.0\% & 66 \\
-\hline
-\hyperref[main:37]{main} & 37&100.0\% & 64 \\
-\hline
-\hyperref[main:101]{main} & 101&100.0\% & 7 \\
+\hyperref[main:206]{main} & 206&100.0\% & 1 \\
 \hline
 \hline
-TestAll.vdmpp & & 100.0\% & 342 \\
+TestAll.vdmpp & & 100.0\% & 12 \\
 \hline
 \end{longtable}
 

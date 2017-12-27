@@ -10,15 +10,17 @@ values
 -- TODO Define values here
 instance variables
 -- TODO Define instance variables here
-	private utilizadores: Utilizadores := {};
-	private trabalhos: Trabalhos := {};
+	private utilizadores: set of Utilizador := {};
+	private trabalhos: set of Trabalho := {};
 	
 operations
 -- TODO Define operations here
 	
 	--Construtor
 	public Hokify: () ==> Hokify
-	Hokify()==(return self);
+	Hokify()==(return self)
+	post utilizadores = {} and
+			trabalhos = {};
 	
 	
 	--Adicionar Utilizadores
@@ -27,68 +29,83 @@ operations
 	pre sameUser(utilizador)
 	post utilizadores = utilizadores~ union {utilizador};
 	
+	-- Remover Utilizadores
+	public removeUtilizadores: Utilizador ==> ()
+	removeUtilizadores(utilizador) == utilizadores := utilizadores \ {utilizador}
+	pre not sameUser(utilizador)
+	post utilizadores = utilizadores~ \ {utilizador};
+	
 	--Adicionar Trabalhos
 	public addTrabalhos: Trabalho ==> ()
 	addTrabalhos(trabalho) == trabalhos := trabalhos union {trabalho}
 	pre sameTrabalho(trabalho)
 	post trabalhos = trabalhos~ union {trabalho};
 	
+	-- Remover Trabalhos
+	public removeTrabalhos: Trabalho ==> ()
+	removeTrabalhos(trabalho) == trabalhos := trabalhos \ {trabalho}
+	pre not sameTrabalho(trabalho)
+	post trabalhos = trabalhos~ \ {trabalho};
+	
 	-- Retorna os utilizadores
-	public pure getUtilizadores : () ==> Utilizadores
+	public pure getUtilizadores : () ==> set of Utilizador
 	getUtilizadores() ==
 	(
 		return utilizadores;
 	);
 	
 	-- Retorna os trabalhos
-	public pure getTrabalhos : () ==> Trabalhos
+	public pure getTrabalhos : () ==> set of Trabalho
 	getTrabalhos() ==
 	(
 		return trabalhos;
 	);
 	
 	-- Retorna os trabalhos por nome
-	public pure getTrabalhosPorNome: String ==> Trabalhos
+	public pure getTrabalhosPorNome: seq of char ==> set of Trabalho
 	getTrabalhosPorNome(nome) == (return {trabalhos | trabalhos in set trabalhos & trabalhos.nomeSemelhante(nome)})
 	pre len nome > 0;
 	
 	--Retorna os trabalhos por interesses
-	public pure getTrabalhosPorInteresses: String ==> Trabalhos
+	public pure getTrabalhosPorInteresses: seq of char ==> set of Trabalho
 	getTrabalhosPorInteresses(nome) == (
-		dcl results: Trabalhos := {};
+		dcl results: set of Trabalho := {};
 		for all tr in set trabalhos do
 			if nome in set tr.getInteresses() then
 				results := results union {tr};
 		return results;
-	);
+	)
+	pre len nome > 0;
 	
 	--Retorna os trabalhos por skills
-	public pure getTrabalhosPorSkills: String ==> Trabalhos
+	public pure getTrabalhosPorSkills: seq of char ==> set of Trabalho
 	getTrabalhosPorSkills(nome) == (
-		dcl results: Trabalhos := {};
+		dcl results: set of Trabalho := {};
 		for all tr in set trabalhos do
 			if nome in set tr.getSkills() then
 				results := results union {tr};
 		return results;
-	);
+	)
+	pre len nome > 0;
 
 	--Retorna os trabalhos por Escolaridade
-	public pure getTrabalhosPorEscolaridade: Escolaridade ==> Trabalhos
+	public pure getTrabalhosPorEscolaridade: Escolaridade ==> set of Trabalho
 	getTrabalhosPorEscolaridade(nome) == (
-		dcl results: Trabalhos := {};
+		dcl results: set of Trabalho := {};
 		for all tr in set trabalhos do
 			if nome in set tr.getlistaEscolaridades() then
 				results := results union {tr};
 		return results;
-	);
+	)
+	pre nome <> undefined;
 	
 	--Retorna os trabalhos por Utilizador (Escolaridade,Skills,interesses)
-	public pure getTrabalhosPorUtilizador: Utilizador ==> Trabalhos
+	public pure getTrabalhosPorUtilizador: Utilizador ==> set of Trabalho
 	getTrabalhosPorUtilizador(usr) == (
-		dcl results_escolaridade: Trabalhos := {};
-		dcl results_skills: Trabalhos := {};
-		dcl results_interesses: Trabalhos := {};
-		dcl trabalhos_temp: Trabalhos := {};
+		dcl results_escolaridade: set of Trabalho := {};
+		dcl results_skills: set of Trabalho := {};
+		dcl results_interesses: set of Trabalho := {};
+		dcl trabalhos_temp: set of Trabalho := {};
 		results_escolaridade := getTrabalhosPorEscolaridade(usr.getEscolaridade());
 		
 		for all skill in set usr.getSkills() do
@@ -103,65 +120,71 @@ operations
 				if interesse_temp not in set results_interesses then
 					results_interesses := results_interesses union {interesse_temp};
 		return (results_escolaridade inter results_skills inter results_interesses);
-	);
+	)
+	pre usr <> undefined;
 	
 	--Retorna os trabalhos por pais
-	public pure getTrabalhosPorPais: String ==> Trabalhos
+	public pure getTrabalhosPorPais: seq of char ==> set of Trabalho
 	getTrabalhosPorPais(nome) == (
-		dcl results: Trabalhos := {};
+		dcl results: set of Trabalho := {};
 		for all tr in set trabalhos do
 			if nome = tr.getPais() then
 				results := results union {tr};
 		return results;
-	);
+	)
+	pre len nome > 0;
 	
 	--Retorna os trabalhos por localidade
-	public pure getTrabalhosPorLocalidade: String ==> Trabalhos
+	public pure getTrabalhosPorLocalidade: seq of char ==> set of Trabalho
 	getTrabalhosPorLocalidade(nome) == (
-		dcl results: Trabalhos := {};
+		dcl results: set of Trabalho := {};
 		for all tr in set trabalhos do
 			if nome = tr.getLocalidade() then
 				results := results union {tr};
 		return results;
-	);
+	)
+	pre len nome > 0;
 	
 	--Retorna os utilizadres por interesses
-	public pure getUtilizadoresPorInteresses: String ==> Utilizadores
+	public pure getUtilizadoresPorInteresses: seq of char ==> set of Utilizador
 	getUtilizadoresPorInteresses(nome) == (
-		dcl results: Utilizadores := {};
+		dcl results: set of Utilizador := {};
 		for all tr in set utilizadores do
 			if nome in set tr.getInteresses() then
 				results := results union {tr};
 		return results;
-	);
+	)
+	pre len nome > 0;
 	
 	--Retorna os utilizadres por skills
-	public pure getUtilizadoresPorSkills: String ==> Utilizadores
+	public pure getUtilizadoresPorSkills: seq of char ==> set of Utilizador
 	getUtilizadoresPorSkills(nome) == (
-		dcl results: Utilizadores := {};
+		dcl results: set of Utilizador := {};
 		for all tr in set utilizadores do
 			if nome in set tr.getSkills() then
 				results := results union {tr};
 		return results;
-	);
+	)
+	pre len nome > 0;
 
 	--Retorna os utilizadres por Escolaridade
-	public pure getUtilizadoresPorEscolaridade: Escolaridade ==> Utilizadores
+	public pure getUtilizadoresPorEscolaridade: Escolaridade ==> set of Utilizador
 	getUtilizadoresPorEscolaridade(nome) == (
-		dcl results: Utilizadores := {};
+		dcl results: set of Utilizador := {};
 		for all tr in set utilizadores do
 			if nome in set tr.getlistaEscolaridades() then
 				results := results union {tr};
 		return results;
-	);
+	)
+	pre nome <> undefined;
 	
 	--Retorna os utilizadores por Trabalhos (Escolaridade,Skills,interesses)
-	public pure getTrabalhosPorUtilizador: Trabalho ==> Utilizadores
+	public pure getTrabalhosPorUtilizador: Trabalho ==> set of Utilizador
 	getTrabalhosPorUtilizador(trab) == (
-		dcl results_escolaridade: Utilizadores := {};
-		dcl results_skills: Utilizadores := {};
-		dcl results_interesses: Utilizadores := {};
-		dcl utilizadores_temp: Utilizadores := {};
+		dcl results_escolaridade: set of Utilizador := {};
+		dcl results_skills: set of Utilizador := {};
+		dcl results_interesses: set of Utilizador := {};
+		dcl utilizadores_temp: set of Utilizador := {};
 		results_escolaridade := getUtilizadoresPorEscolaridade(trab.getEscolaridade());
 		
 		for all skill in set trab.getSkills() do
@@ -177,7 +200,8 @@ operations
 					results_interesses := results_interesses union {interesse_temp};
 					
 		return (results_escolaridade inter results_skills inter results_interesses);
-	);
+	)
+	pre trab <> undefined;
 	
 	-- Verifica se o utilizador existe por email ou telefone
 	public pure sameUser: Utilizador ==> bool
@@ -187,7 +211,8 @@ operations
 					u.getTelefone() = user.getTelefone()) then
 				return false;
 		return true;
-	);
+	)
+	pre user <> undefined;
 	
 	-- Verifica se o trabalho existe por email ou nome ou entidade
 	public pure sameTrabalho: Trabalho ==> bool
@@ -198,7 +223,8 @@ operations
 					u.getEntidade() = trab.getEntidade()) then
 				return false;
 		return true;
-	);
+	)
+	pre trab <> undefined;
 	
 functions
 -- TODO Define functiones here

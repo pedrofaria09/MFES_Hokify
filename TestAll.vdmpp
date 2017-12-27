@@ -10,7 +10,7 @@ operations
 public TestPlayerFirst :() ==> ()
 TestPlayerFirst() ==
 (
-	dcl user : Utilizador := new Utilizador("Pedro","email@email.com",<Masculino>,<Licenciatura>,"Portugal","Porto",27,123456789);
+	dcl user : Utilizador := new Utilizador("Pedro","email@email.com",<Masculino>,<Mestrado>,"Portugal","Porto",27,123456789);
 	user.addInteresse("Informatica");
 	user.addInteresse("Cinema");
 	user.addSkills("Java");
@@ -20,7 +20,7 @@ TestPlayerFirst() ==
 	assertEqual(user.getNome(),"Pedro");
 	assertEqual(user.getEmail(),"email@email.com");
 	assertEqual(user.getSexo(),<Masculino>);
-	assertEqual(user.getEscolaridade(),<Licenciatura>);
+	assertEqual(user.getEscolaridade(),<Mestrado>);
 	assertEqual(user.getPais(),"Portugal");
 	assertEqual(user.getLocalidade(),"Porto");
 	assertEqual(user.getIdade(),27);
@@ -38,21 +38,21 @@ TestPlayerFirst() ==
 	user.setEmail("PedroFaria@gmail.com");
 	user.setPais("Espanha");
 	user.setLocalidade("Madrid");
-	user.setEscolaridade(<Mestrado>);
+	user.setEscolaridade(<Secundario>);
 	user.setTelefone(987654321);
-	user.setEscolaridade(<Mestrado>);
 	assertEqual(user.getNome(),"Pedro Faria");
 	assertEqual(user.getEmail(),"PedroFaria@gmail.com");
 	assertEqual(user.getPais(),"Espanha");
 	assertEqual(user.getLocalidade(),"Madrid");
-	assertEqual(user.getEscolaridade(),<Mestrado>);
+	assertEqual(user.getEscolaridade(),<Secundario>);
 	assertEqual(user.getTelefone(),987654321);
-	assertEqual(user.getEscolaridade(),<Mestrado>);
 	
 	--deve falhar pois estamos adicionando um duplicado
 	--user.addInteresse("Informatica");
 	--user.addSkills("Java");
 	
+	--Verifica a escolaridade de um curso
+	assertTrue(not (user.verificarEscolaridade(<Secundario>,10)));
 	return;
 );
 
@@ -60,7 +60,7 @@ TestPlayerFirst() ==
 public TestTrabalhoFirst :() ==> ()
 TestTrabalhoFirst() ==
 (
-	dcl trabalho : Trabalho := new Trabalho("Programador de java","Google","google@google.pt",<Licenciatura>,123456789,"Portugal","Porto");
+	dcl trabalho : Trabalho := new Trabalho("Programador de java","Google","google@google.pt",<Mestrado>,123456789,"Portugal","Porto");
 	trabalho.addInteresse("Informatica");
 	trabalho.addInteresse("Cinema");
 	trabalho.addSkills("Java");
@@ -70,7 +70,7 @@ TestTrabalhoFirst() ==
 	assertEqual(trabalho.getNome(),"Programador de java");
 	assertEqual(trabalho.getEntidade(), "Google");
 	assertEqual(trabalho.getEmail(),"google@google.pt");
-	assertEqual(trabalho.getEscolaridade(),<Licenciatura>);
+	assertEqual(trabalho.getEscolaridade(),<Mestrado>);
 	assertEqual(trabalho.getTelefone(),123456789);
 	assertEqual(trabalho.getPais(),"Portugal");
 	assertEqual(trabalho.getLocalidade(),"Porto");
@@ -89,13 +89,13 @@ TestTrabalhoFirst() ==
 	trabalho.setPais("Espanha");
 	trabalho.setLocalidade("Madrid");
 	trabalho.setTelefone(987654321);
-	trabalho.setEscolaridade(<Mestrado>);
+	trabalho.setEscolaridade(<Secundario>);
 	assertEqual(trabalho.getNome(),"Programador de C++");
 	assertEqual(trabalho.getEmail(),"apple@apple.pt");
 	assertEqual(trabalho.getPais(),"Espanha");
 	assertEqual(trabalho.getLocalidade(),"Madrid");
 	assertEqual(trabalho.getTelefone(),987654321);
-	assertEqual(trabalho.getEscolaridade(),<Mestrado>);
+	assertEqual(trabalho.getEscolaridade(),<Secundario>);
 
 	return;
 );
@@ -201,6 +201,13 @@ TestHokify() ==
 	utilizador2.addInteresse("Cinema");
 	utilizador2.addSkills("VDM");
 	assertEqual(hokify.getTrabalhosPorUtilizador(trabalho),{utilizador,utilizador2});
+	
+	assertEqual(card hokify.getUtilizadores(),3);
+	assertEqual(card hokify.getTrabalhos(),3);
+	hokify.removeUtilizadores(utilizador2);
+	hokify.removeTrabalhos(trabalho2);
+	assertEqual(card hokify.getUtilizadores(),2);
+	assertEqual(card hokify.getTrabalhos(),2);
 	return;
 );
 

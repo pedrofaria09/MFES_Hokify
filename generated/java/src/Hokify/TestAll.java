@@ -257,7 +257,7 @@ public class TestAll extends MyTestCase {
   }
 
   public static void main(String[] args) {
-
+	  IO.println("JAVA TESTS");
     IO.print("TestPlayerFirst -> ");
     new TestAll().TestPlayerFirst();
     IO.println("Passed");

@@ -11,139 +11,144 @@ values
 -- TODO Define values here
 instance variables
 -- TODO Define instance variables here
- private utilizadores: Utilizadores := {};
- private trabalhos: Trabalhos := {};
+ private utilizadores: set of Utilizador := {};
+ private trabalhos: set of Trabalho := {};
  
 operations
 -- TODO Define operations here
-(*@
-\label{Hokify:18}
-@*)
  
  --Construtor
+(*@
+\label{Hokify:20}
+@*)
  public Hokify: () ==> Hokify
- Hokify()==(return self);
-(*@
-\label{addUtilizadores:22}
-@*)
-(*@
-\label{addSkills:22}
-@*)
+ Hokify()==(return self)
+ post utilizadores = {} and
+   trabalhos = {};
  
+(*@
+\label{addUtilizadores:25}
+@*)
  
  --Adicionar Utilizadores
  public addUtilizadores: Utilizador ==> ()
-(*@
-\label{mapEscolaridades:26}
-@*)
  addUtilizadores(utilizador) == utilizadores := utilizadores union {utilizador}
  pre sameUser(utilizador)
-(*@
-\label{addTrabalhos:28}
-@*)
  post utilizadores = utilizadores~ union {utilizador};
+(*@
+\label{addTrabalhos:31}
+@*)
+ 
+ -- Remover Utilizadores
+(*@
+\label{removeUtilizadores:33}
+@*)
+(*@
+\label{removeInteresse:33}
+@*)
+ public removeUtilizadores: Utilizador ==> ()
+ removeUtilizadores(utilizador) == utilizadores := utilizadores \ {utilizador}
+ pre not sameUser(utilizador)
+ post utilizadores = utilizadores~ \ {utilizador};
+(*@
+\label{getUtilizadores:37}
+@*)
  
  --Adicionar Trabalhos
  public addTrabalhos: Trabalho ==> ()
  addTrabalhos(trabalho) == trabalhos := trabalhos union {trabalho}
-(*@
-\label{sameUser:33}
-@*)
  pre sameTrabalho(trabalho)
-(*@
-\label{getSkills:34}
-@*)
-(*@
-\label{getUtilizadores:34}
-@*)
  post trabalhos = trabalhos~ union {trabalho};
  
+(*@
+\label{getTrabalhos:44}
+@*)
+ -- Remover Trabalhos
+(*@
+\label{removeTrabalhos:45}
+@*)
+ public removeTrabalhos: Trabalho ==> ()
+ removeTrabalhos(trabalho) == trabalhos := trabalhos \ {trabalho}
+ pre not sameTrabalho(trabalho)
+ post trabalhos = trabalhos~ \ {trabalho};
+ 
  -- Retorna os utilizadores
- public pure getUtilizadores : () ==> Utilizadores
+(*@
+\label{getTrabalhosPorNome:51}
+@*)
+ public pure getUtilizadores : () ==> set of Utilizador
  getUtilizadores() ==
  (
   return utilizadores;
-(*@
-\label{sameTrabalho:41}
-@*)
-(*@
-\label{getTrabalhos:41}
-@*)
  );
+(*@
+\label{getTrabalhosPorInteresses:56}
+@*)
  
  -- Retorna os trabalhos
- public pure getTrabalhos : () ==> Trabalhos
+ public pure getTrabalhos : () ==> set of Trabalho
  getTrabalhos() ==
  (
   return trabalhos;
  );
  
  -- Retorna os trabalhos por nome
- public pure getTrabalhosPorNome: String ==> Trabalhos
+ public pure getTrabalhosPorNome: seq of char ==> set of Trabalho
+(*@
+\label{getTrabalhosPorSkills:66}
+@*)
  getTrabalhosPorNome(nome) == (return {trabalhos | trabalhos in set trabalhos & trabalhos.nomeSemelhante(nome)})
  pre len nome > 0;
-(*@
-\label{getTrabalhosPorInteresses:54}
-@*)
  
  --Retorna os trabalhos por interesses
- public pure getTrabalhosPorInteresses: String ==> Trabalhos
+ public pure getTrabalhosPorInteresses: seq of char ==> set of Trabalho
  getTrabalhosPorInteresses(nome) == (
-  dcl results: Trabalhos := {};
-(*@
-\label{searchByName:59}
-@*)
-(*@
-\label{getTrabalhosPorNome:59}
-@*)
+  dcl results: set of Trabalho := {};
   for all tr in set trabalhos do
    if nome in set tr.getInteresses() then
     results := results union {tr};
-  return results;
- );
-(*@
-\label{getTrabalhosPorSkills:64}
-@*)
- 
- --Retorna os trabalhos por skills
- public pure getTrabalhosPorSkills: String ==> Trabalhos
- getTrabalhosPorSkills(nome) == (
-  dcl results: Trabalhos := {};
-  for all tr in set trabalhos do
-   if nome in set tr.getSkills() then
-    results := results union {tr};
-  return results;
- );
-(*@
-\label{getTrabalhosPorLocalidade:74}
-@*)
-(*@
-\label{getTrabalhosPorPais:74}
-@*)
-
- --Retorna os trabalhos por Escolaridade
 (*@
 \label{getTrabalhosPorEscolaridade:76}
 @*)
- public pure getTrabalhosPorEscolaridade: Escolaridade ==> Trabalhos
+  return results;
+ )
+ pre len nome > 0;
+ 
+ --Retorna os trabalhos por skills
+ public pure getTrabalhosPorSkills: seq of char ==> set of Trabalho
+ getTrabalhosPorSkills(nome) == (
+  dcl results: set of Trabalho := {};
+  for all tr in set trabalhos do
+   if nome in set tr.getSkills() then
+(*@
+\label{getTrabalhosPorUtilizador:86}
+@*)
+    results := results union {tr};
+  return results;
+ )
+ pre len nome > 0;
+
+ --Retorna os trabalhos por Escolaridade
+ public pure getTrabalhosPorEscolaridade: Escolaridade ==> set of Trabalho
  getTrabalhosPorEscolaridade(nome) == (
-  dcl results: Trabalhos := {};
+  dcl results: set of Trabalho := {};
   for all tr in set trabalhos do
    if nome in set tr.getlistaEscolaridades() then
     results := results union {tr};
   return results;
- );
+ )
+ pre nome <> undefined;
  
  --Retorna os trabalhos por Utilizador (Escolaridade,Skills,interesses)
-(*@
-\label{getTrabalhosPorUtilizador:86}
-@*)
- public pure getTrabalhosPorUtilizador: Utilizador ==> Trabalhos
+ public pure getTrabalhosPorUtilizador: Utilizador ==> set of Trabalho
  getTrabalhosPorUtilizador(usr) == (
-  dcl results_escolaridade: Trabalhos := {};
-  dcl results_skills: Trabalhos := {};
-  dcl results_interesses: Trabalhos := {};
-  dcl trabalhos_temp: Trabalhos := {};
+  dcl results_escolaridade: set of Trabalho := {};
+  dcl results_skills: set of Trabalho := {};
+  dcl results_interesses: set of Trabalho := {};
+  dcl trabalhos_temp: set of Trabalho := {};
+(*@
+\label{getTrabalhosPorPais:109}
+@*)
   results_escolaridade := getTrabalhosPorEscolaridade(usr.getEscolaridade());
   
   for all skill in set usr.getSkills() do
@@ -154,83 +159,98 @@ operations
      
   for all interesse in set usr.getInteresses() do
    trabalhos_temp := getTrabalhosPorInteresses(interesse);
+(*@
+\label{getTrabalhosPorLocalidade:119}
+@*)
    for all interesse_temp in set trabalhos_temp do
     if interesse_temp not in set results_interesses then
      results_interesses := results_interesses union {interesse_temp};
   return (results_escolaridade inter results_skills inter results_interesses);
- );
+ )
+ pre usr <> undefined;
  
  --Retorna os trabalhos por pais
- public pure getTrabalhosPorPais: String ==> Trabalhos
+ public pure getTrabalhosPorPais: seq of char ==> set of Trabalho
  getTrabalhosPorPais(nome) == (
-  dcl results: Trabalhos := {};
+(*@
+\label{getUtilizadoresPorInteresses:129}
+@*)
+  dcl results: set of Trabalho := {};
   for all tr in set trabalhos do
    if nome = tr.getPais() then
     results := results union {tr};
   return results;
- );
+ )
+ pre len nome > 0;
  
  --Retorna os trabalhos por localidade
- public pure getTrabalhosPorLocalidade: String ==> Trabalhos
+ public pure getTrabalhosPorLocalidade: seq of char ==> set of Trabalho
+(*@
+\label{getUtilizadoresPorSkills:139}
+@*)
  getTrabalhosPorLocalidade(nome) == (
-  dcl results: Trabalhos := {};
+  dcl results: set of Trabalho := {};
   for all tr in set trabalhos do
    if nome = tr.getLocalidade() then
     results := results union {tr};
   return results;
- );
-(*@
-\label{getUtilizadoresPorInteresses:127}
-@*)
+ )
+ pre len nome > 0;
  
  --Retorna os utilizadres por interesses
- public pure getUtilizadoresPorInteresses: String ==> Utilizadores
+(*@
+\label{getUtilizadoresPorEscolaridade:149}
+@*)
+ public pure getUtilizadoresPorInteresses: seq of char ==> set of Utilizador
  getUtilizadoresPorInteresses(nome) == (
-  dcl results: Utilizadores := {};
+  dcl results: set of Utilizador := {};
   for all tr in set utilizadores do
    if nome in set tr.getInteresses() then
     results := results union {tr};
   return results;
- );
-(*@
-\label{getUtilizadoresPorSkills:137}
-@*)
+ )
+ pre len nome > 0;
  
  --Retorna os utilizadres por skills
- public pure getUtilizadoresPorSkills: String ==> Utilizadores
+ public pure getUtilizadoresPorSkills: seq of char ==> set of Utilizador
  getUtilizadoresPorSkills(nome) == (
-  dcl results: Utilizadores := {};
+  dcl results: set of Utilizador := {};
   for all tr in set utilizadores do
    if nome in set tr.getSkills() then
     results := results union {tr};
   return results;
- );
-(*@
-\label{getUtilizadoresPorEscolaridade:147}
-@*)
+ )
+ pre len nome > 0;
 
  --Retorna os utilizadres por Escolaridade
- public pure getUtilizadoresPorEscolaridade: Escolaridade ==> Utilizadores
+ public pure getUtilizadoresPorEscolaridade: Escolaridade ==> set of Utilizador
  getUtilizadoresPorEscolaridade(nome) == (
-  dcl results: Utilizadores := {};
+  dcl results: set of Utilizador := {};
   for all tr in set utilizadores do
    if nome in set tr.getlistaEscolaridades() then
     results := results union {tr};
   return results;
- );
+ )
+ pre nome <> undefined;
  
  --Retorna os utilizadores por Trabalhos (Escolaridade,Skills,interesses)
- public pure getTrabalhosPorUtilizador: Trabalho ==> Utilizadores
+ public pure getTrabalhosPorUtilizador: Trabalho ==> set of Utilizador
+(*@
+\label{sameUser:183}
+@*)
  getTrabalhosPorUtilizador(trab) == (
-  dcl results_escolaridade: Utilizadores := {};
-  dcl results_skills: Utilizadores := {};
-  dcl results_interesses: Utilizadores := {};
-  dcl utilizadores_temp: Utilizadores := {};
+  dcl results_escolaridade: set of Utilizador := {};
+  dcl results_skills: set of Utilizador := {};
+  dcl results_interesses: set of Utilizador := {};
+  dcl utilizadores_temp: set of Utilizador := {};
   results_escolaridade := getUtilizadoresPorEscolaridade(trab.getEscolaridade());
   
   for all skill in set trab.getSkills() do
    utilizadores_temp := getUtilizadoresPorSkills(skill);
    for all skill_temp in set utilizadores_temp do
+(*@
+\label{sameTrabalho:193}
+@*)
     if skill_temp not in set results_skills then
      results_skills := results_skills union {skill_temp};
      
@@ -241,7 +261,8 @@ operations
      results_interesses := results_interesses union {interesse_temp};
      
   return (results_escolaridade inter results_skills inter results_interesses);
- );
+ )
+ pre trab <> undefined;
  
  -- Verifica se o utilizador existe por email ou telefone
  public pure sameUser: Utilizador ==> bool
@@ -251,7 +272,8 @@ operations
      u.getTelefone() = user.getTelefone()) then
     return false;
   return true;
- );
+ )
+ pre user <> undefined;
  
  -- Verifica se o trabalho existe por email ou nome ou entidade
  public pure sameTrabalho: Trabalho ==> bool
@@ -262,7 +284,8 @@ operations
      u.getEntidade() = trab.getEntidade()) then
     return false;
   return true;
- );
+ )
+ pre trab <> undefined;
  
 functions
 -- TODO Define functiones here
@@ -276,50 +299,48 @@ end Hokify
 Function or operation & Line & Coverage & Calls \\
 \hline
 \hline
-\hyperref[Hokify:18]{Hokify} & 18&100.0\% & 37 \\
+\hyperref[Hokify:20]{Hokify} & 20&100.0\% & 4 \\
 \hline
-\hyperref[addSkills:22]{addSkills} & 22&100.0\% & 81 \\
+\hyperref[addTrabalhos:31]{addTrabalhos} & 31&100.0\% & 3 \\
 \hline
-\hyperref[addTrabalhos:28]{addTrabalhos} & 28&100.0\% & 243 \\
+\hyperref[addUtilizadores:25]{addUtilizadores} & 25&100.0\% & 12 \\
 \hline
-\hyperref[addUtilizadores:22]{addUtilizadores} & 22&100.0\% & 81 \\
+\hyperref[getTrabalhos:44]{getTrabalhos} & 44&100.0\% & 4 \\
 \hline
-\hyperref[getSkills:34]{getSkills} & 34&100.0\% & 74 \\
+\hyperref[getTrabalhosPorEscolaridade:76]{getTrabalhosPorEscolaridade} & 76&100.0\% & 6 \\
 \hline
-\hyperref[getTrabalhos:41]{getTrabalhos} & 41&100.0\% & 74 \\
+\hyperref[getTrabalhosPorInteresses:56]{getTrabalhosPorInteresses} & 56&100.0\% & 7 \\
 \hline
-\hyperref[getTrabalhosPorEscolaridade:76]{getTrabalhosPorEscolaridade} & 76&100.0\% & 241 \\
+\hyperref[getTrabalhosPorLocalidade:119]{getTrabalhosPorLocalidade} & 119&100.0\% & 2 \\
 \hline
-\hyperref[getTrabalhosPorInteresses:54]{getTrabalhosPorInteresses} & 54&100.0\% & 213 \\
+\hyperref[getTrabalhosPorNome:51]{getTrabalhosPorNome} & 51&100.0\% & 3 \\
 \hline
-\hyperref[getTrabalhosPorLocalidade:74]{getTrabalhosPorLocalidade} & 74&100.0\% & 24 \\
+\hyperref[getTrabalhosPorPais:109]{getTrabalhosPorPais} & 109&100.0\% & 3 \\
 \hline
-\hyperref[getTrabalhosPorNome:59]{getTrabalhosPorNome} & 59&100.0\% & 212 \\
+\hyperref[getTrabalhosPorSkills:66]{getTrabalhosPorSkills} & 66&100.0\% & 7 \\
 \hline
-\hyperref[getTrabalhosPorPais:74]{getTrabalhosPorPais} & 74&100.0\% & 29 \\
+\hyperref[getTrabalhosPorUtilizador:86]{getTrabalhosPorUtilizador} & 86&100.0\% & 2 \\
 \hline
-\hyperref[getTrabalhosPorSkills:64]{getTrabalhosPorSkills} & 64&100.0\% & 213 \\
+\hyperref[getUtilizadores:37]{getUtilizadores} & 37&100.0\% & 4 \\
 \hline
-\hyperref[getTrabalhosPorUtilizador:86]{getTrabalhosPorUtilizador} & 86&100.0\% & 56 \\
+\hyperref[getUtilizadoresPorEscolaridade:149]{getUtilizadoresPorEscolaridade} & 149&100.0\% & 6 \\
 \hline
-\hyperref[getUtilizadores:34]{getUtilizadores} & 34&100.0\% & 74 \\
+\hyperref[getUtilizadoresPorInteresses:129]{getUtilizadoresPorInteresses} & 129&100.0\% & 7 \\
 \hline
-\hyperref[getUtilizadoresPorEscolaridade:147]{getUtilizadoresPorEscolaridade} & 147&100.0\% & 43 \\
+\hyperref[getUtilizadoresPorSkills:139]{getUtilizadoresPorSkills} & 139&100.0\% & 7 \\
 \hline
-\hyperref[getUtilizadoresPorInteresses:127]{getUtilizadoresPorInteresses} & 127&100.0\% & 81 \\
+\hyperref[removeInteresse:33]{removeInteresse} & 33&100.0\% & 1 \\
 \hline
-\hyperref[getUtilizadoresPorSkills:137]{getUtilizadoresPorSkills} & 137&100.0\% & 52 \\
+\hyperref[removeTrabalhos:45]{removeTrabalhos} & 45&100.0\% & 1 \\
 \hline
-\hyperref[mapEscolaridades:26]{mapEscolaridades} & 26&100.0\% & 243 \\
+\hyperref[removeUtilizadores:33]{removeUtilizadores} & 33&100.0\% & 1 \\
 \hline
-\hyperref[sameTrabalho:41]{sameTrabalho} & 41&100.0\% & 28 \\
+\hyperref[sameTrabalho:193]{sameTrabalho} & 193&100.0\% & 5 \\
 \hline
-\hyperref[sameUser:33]{sameUser} & 33&100.0\% & 41 \\
-\hline
-\hyperref[searchByName:59]{searchByName} & 59&100.0\% & 1347 \\
+\hyperref[sameUser:183]{sameUser} & 183&100.0\% & 5 \\
 \hline
 \hline
-Hokify.vdmpp & & 100.0\% & 3487 \\
+Hokify.vdmpp & & 100.0\% & 90 \\
 \hline
 \end{longtable}
 
