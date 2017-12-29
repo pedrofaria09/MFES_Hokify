@@ -23,9 +23,19 @@ public class Hokify {
     utilizadores = SetUtil.union(Utils.copy(utilizadores), SetUtil.set(utilizador));
   }
 
+  public void removeUtilizadores(final Utilizador utilizador) {
+
+    utilizadores = SetUtil.diff(Utils.copy(utilizadores), SetUtil.set(utilizador));
+  }
+
   public void addTrabalhos(final Trabalho trabalho) {
 
     trabalhos = SetUtil.union(Utils.copy(trabalhos), SetUtil.set(trabalho));
+  }
+
+  public void removeTrabalhos(final Trabalho trabalho) {
+
+    trabalhos = SetUtil.diff(Utils.copy(trabalhos), SetUtil.set(trabalho));
   }
 
   public VDMSet getUtilizadores() {

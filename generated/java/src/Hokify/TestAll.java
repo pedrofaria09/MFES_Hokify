@@ -12,7 +12,7 @@ public class TestAll extends MyTestCase {
             "Pedro",
             "email@email.com",
             Hokify_quotes.MasculinoQuote.getInstance(),
-            Hokify_quotes.LicenciaturaQuote.getInstance(),
+            Hokify_quotes.MestradoQuote.getInstance(),
             "Portugal",
             "Porto",
             27L,
@@ -24,7 +24,7 @@ public class TestAll extends MyTestCase {
     assertEqual(user.getNome(), "Pedro");
     assertEqual(user.getEmail(), "email@email.com");
     assertEqual(((Object) user.getSexo()), Hokify_quotes.MasculinoQuote.getInstance());
-    assertEqual(((Object) user.getEscolaridade()), Hokify_quotes.LicenciaturaQuote.getInstance());
+    assertEqual(((Object) user.getEscolaridade()), Hokify_quotes.MestradoQuote.getInstance());
     assertEqual(user.getPais(), "Portugal");
     assertEqual(user.getLocalidade(), "Porto");
     assertEqual(user.getIdade(), 27L);
@@ -39,16 +39,15 @@ public class TestAll extends MyTestCase {
     user.setEmail("PedroFaria@gmail.com");
     user.setPais("Espanha");
     user.setLocalidade("Madrid");
-    user.setEscolaridade(Hokify_quotes.MestradoQuote.getInstance());
+    user.setEscolaridade(Hokify_quotes.SecundarioQuote.getInstance());
     user.setTelefone(987654321L);
-    user.setEscolaridade(Hokify_quotes.MestradoQuote.getInstance());
     assertEqual(user.getNome(), "Pedro Faria");
     assertEqual(user.getEmail(), "PedroFaria@gmail.com");
     assertEqual(user.getPais(), "Espanha");
     assertEqual(user.getLocalidade(), "Madrid");
-    assertEqual(((Object) user.getEscolaridade()), Hokify_quotes.MestradoQuote.getInstance());
+    assertEqual(((Object) user.getEscolaridade()), Hokify_quotes.SecundarioQuote.getInstance());
     assertEqual(user.getTelefone(), 987654321L);
-    assertEqual(((Object) user.getEscolaridade()), Hokify_quotes.MestradoQuote.getInstance());
+    assertTrue(!(user.verificarEscolaridade(Hokify_quotes.SecundarioQuote.getInstance(), 10L)));
     return;
   }
 
@@ -59,7 +58,7 @@ public class TestAll extends MyTestCase {
             "Programador de java",
             "Google",
             "google@google.pt",
-            Hokify_quotes.LicenciaturaQuote.getInstance(),
+            Hokify_quotes.MestradoQuote.getInstance(),
             123456789L,
             "Portugal",
             "Porto");
@@ -70,8 +69,7 @@ public class TestAll extends MyTestCase {
     assertEqual(trabalho.getNome(), "Programador de java");
     assertEqual(trabalho.getEntidade(), "Google");
     assertEqual(trabalho.getEmail(), "google@google.pt");
-    assertEqual(
-        ((Object) trabalho.getEscolaridade()), Hokify_quotes.LicenciaturaQuote.getInstance());
+    assertEqual(((Object) trabalho.getEscolaridade()), Hokify_quotes.MestradoQuote.getInstance());
     assertEqual(trabalho.getTelefone(), 123456789L);
     assertEqual(trabalho.getPais(), "Portugal");
     assertEqual(trabalho.getLocalidade(), "Porto");
@@ -87,13 +85,13 @@ public class TestAll extends MyTestCase {
     trabalho.setPais("Espanha");
     trabalho.setLocalidade("Madrid");
     trabalho.setTelefone(987654321L);
-    trabalho.setEscolaridade(Hokify_quotes.MestradoQuote.getInstance());
+    trabalho.setEscolaridade(Hokify_quotes.SecundarioQuote.getInstance());
     assertEqual(trabalho.getNome(), "Programador de C++");
     assertEqual(trabalho.getEmail(), "apple@apple.pt");
     assertEqual(trabalho.getPais(), "Espanha");
     assertEqual(trabalho.getLocalidade(), "Madrid");
     assertEqual(trabalho.getTelefone(), 987654321L);
-    assertEqual(((Object) trabalho.getEscolaridade()), Hokify_quotes.MestradoQuote.getInstance());
+    assertEqual(((Object) trabalho.getEscolaridade()), Hokify_quotes.SecundarioQuote.getInstance());
     return;
   }
 
@@ -253,11 +251,17 @@ public class TestAll extends MyTestCase {
     utilizador2.addInteresse("Cinema");
     utilizador2.addSkills("VDM");
     assertEqual(hokify.getTrabalhosPorUtilizador(trabalho), SetUtil.set(utilizador, utilizador2));
+    assertEqual(hokify.getUtilizadores().size(), 3L);
+    assertEqual(hokify.getTrabalhos().size(), 3L);
+    hokify.removeUtilizadores(utilizador2);
+    hokify.removeTrabalhos(trabalho2);
+    assertEqual(hokify.getUtilizadores().size(), 2L);
+    assertEqual(hokify.getTrabalhos().size(), 2L);
     return;
   }
 
   public static void main(String[] args) {
-	  IO.println("JAVA TESTS");
+
     IO.print("TestPlayerFirst -> ");
     new TestAll().TestPlayerFirst();
     IO.println("Passed");

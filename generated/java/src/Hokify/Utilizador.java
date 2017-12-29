@@ -52,6 +52,63 @@ public class Utilizador {
     cg_init_Utilizador_1(nm, emailC, sexoC, escolaridadeC, paisC, localidadeC, idadeC, telefoneC);
   }
 
+  public Boolean verificarEscolaridade(final Object escola, final Number idd) {
+
+    Boolean andResult_20 = false;
+
+    if (Utils.equals(escola, Hokify_quotes.SecundarioQuote.getInstance())) {
+      if (idd.longValue() > 17L) {
+        andResult_20 = true;
+      }
+    }
+
+    if (andResult_20) {
+      return true;
+
+    } else {
+      Boolean andResult_21 = false;
+
+      if (Utils.equals(escola, Hokify_quotes.LicenciaturaQuote.getInstance())) {
+        if (idd.longValue() > 20L) {
+          andResult_21 = true;
+        }
+      }
+
+      if (andResult_21) {
+        return true;
+
+      } else {
+        Boolean andResult_22 = false;
+
+        if (Utils.equals(escola, Hokify_quotes.MestradoQuote.getInstance())) {
+          if (idd.longValue() > 22L) {
+            andResult_22 = true;
+          }
+        }
+
+        if (andResult_22) {
+          return true;
+
+        } else {
+          Boolean andResult_23 = false;
+
+          if (Utils.equals(escola, Hokify_quotes.DoutoramentoQuote.getInstance())) {
+            if (idd.longValue() > 24L) {
+              andResult_23 = true;
+            }
+          }
+
+          if (andResult_23) {
+            return true;
+
+          } else {
+            return false;
+          }
+        }
+      }
+    }
+  }
+
   public void listaEscolaridades(final Object tipo) {
 
     if (Utils.equals(tipo, Hokify_quotes.DoutoramentoQuote.getInstance())) {

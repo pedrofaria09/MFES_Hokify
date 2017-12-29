@@ -211,15 +211,15 @@ public class Trabalho {
     Boolean found = false;
     Boolean whileCond_1 = true;
     while (whileCond_1) {
-      Boolean andResult_9 = false;
+      Boolean andResult_10 = false;
 
       if (nameS.length() >= n.length()) {
         if (!(found)) {
-          andResult_9 = true;
+          andResult_10 = true;
         }
       }
 
-      whileCond_1 = andResult_9;
+      whileCond_1 = andResult_10;
 
       if (!(whileCond_1)) {
         break;
@@ -230,15 +230,15 @@ public class Trabalho {
         long toVar_1 = n.length();
 
         for (Long index = 1L; index <= toVar_1; index++) {
-          Boolean andResult_10 = false;
+          Boolean andResult_11 = false;
 
           if (found) {
             if (!(Utils.equals(n.charAt(Utils.index(index)), nameS.charAt(Utils.index(index))))) {
-              andResult_10 = true;
+              andResult_11 = true;
             }
           }
 
-          if (andResult_10) {
+          if (andResult_11) {
             found = false;
           }
         }
