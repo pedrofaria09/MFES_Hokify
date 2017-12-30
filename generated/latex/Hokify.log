@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.12.21)  27 DEC 2017 18:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.12.21)  30 DEC 2017 14:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -297,7 +297,7 @@ LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <8> not available
 
 {/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
  [4]
-Underfull \vbox (badness 10000) detected at line 339
+Underfull \vbox (badness 10000) detected at line 336
  []
 
 ) (./specification/MyTestCase.vdmpp.tex [5]
@@ -318,15 +318,19 @@ Missing character: There is no § in font pcrro7t!
 Missing character: There is no Ã in font pcrro7t!
 Missing character: There is no £ in font pcrro7t!
  [7] [8] [9]
-Underfull \vbox (badness 10000) detected at line 267
+Underfull \vbox (badness 10000) detected at line 268
  []
 
 ) (./specification/Trabalho.vdmpp.tex [10] [11] [12] [13]
-Underfull \vbox (badness 10000) detected at line 345
+Underfull \vbox (badness 10000) detected at line 346
  []
 
 [14]) (./specification/Utilizador.vdmpp.tex [15] [16] [17] [18]
-Underfull \vbox (badness 10000) detected at line 350
+Missing character: There is no Ã in font pcrro7t!
+Missing character: There is no º in font pcrro7t!
+Missing character: There is no Ã in font pcrro7t!
+
+Underfull \vbox (badness 10000) detected at line 381
  []
 
 [19])
@@ -341,10 +345,10 @@ Package rerunfilecheck Info: File `Hokify.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 23.
  ) 
 Here is how much of TeX's memory you used:
- 7755 strings out of 492995
- 115455 string characters out of 6132703
- 464513 words of memory out of 5000000
- 10177 multiletter control sequences out of 15000+600000
+ 7797 strings out of 492995
+ 116075 string characters out of 6132703
+ 465571 words of memory out of 5000000
+ 10191 multiletter control sequences out of 15000+600000
  17044 words of font info for 41 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  33i,6n,48p,273b,1936s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -356,10 +360,10 @@ ive/2017/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2017
 /texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/local/texlive/2017/texmf-
 dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts
 /type1/urw/times/utmr8a.pfb>
-Output written on Hokify.pdf (20 pages, 150409 bytes).
+Output written on Hokify.pdf (20 pages, 153133 bytes).
 PDF statistics:
- 1493 PDF objects out of 1728 (max. 8388607)
- 1449 compressed objects within 15 object streams
- 1069 named destinations out of 1200 (max. 500000)
+ 1528 PDF objects out of 1728 (max. 8388607)
+ 1484 compressed objects within 15 object streams
+ 1097 named destinations out of 1200 (max. 500000)
  41 words of extra memory for PDF output out of 10000 (max. 10000000)
 

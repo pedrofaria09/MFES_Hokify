@@ -51,9 +51,10 @@ operations
    telefone = telefoneC and
    pais = paisC and
    localidade = localidadeC;
-  
+ 
+ -- Adiciona uma lista com as escolaridades no qual possui
 (*@
-\label{listaEscolaridades:51}
+\label{listaEscolaridades:52}
 @*)
  public listaEscolaridades: Escolaridade ==> ()
  listaEscolaridades(tipo)==(
@@ -75,7 +76,7 @@ operations
 
  -- Adicionar interesses
 (*@
-\label{addInteresse:70}
+\label{addInteresse:71}
 @*)
  public addInteresse: seq of char ==> ()
  addInteresse(String) == interesses := interesses union {String}
@@ -84,7 +85,7 @@ operations
  
  -- Remover interesses
 (*@
-\label{removeInteresse:76}
+\label{removeInteresse:77}
 @*)
  public removeInteresse: seq of char ==> ()
  removeInteresse(String) == interesses := interesses \ {String}
@@ -93,7 +94,7 @@ operations
  
  -- Retorna os interesses
 (*@
-\label{getInteresses:82}
+\label{getInteresses:83}
 @*)
  public pure getInteresses : () ==> set of String
  getInteresses() ==
@@ -103,7 +104,7 @@ operations
  
  -- Adicionar skills
 (*@
-\label{addSkills:89}
+\label{addSkills:90}
 @*)
  public addSkills: seq of char ==> ()
  addSkills(String) == skills := skills union {String}
@@ -112,7 +113,7 @@ operations
  
  -- Remover skills
 (*@
-\label{removeSkills:95}
+\label{removeSkills:96}
 @*)
  public removeSkills: seq of char ==> ()
  removeSkills(String) == skills := skills \ {String}
@@ -121,7 +122,7 @@ operations
  
  -- Retorna as skills
 (*@
-\label{getSkills:101}
+\label{getSkills:102}
 @*)
  public pure getSkills : () ==> set of String
  getSkills() ==
@@ -131,7 +132,7 @@ operations
  
  -- Retorna o nome
 (*@
-\label{getNome:108}
+\label{getNome:109}
 @*)
  public pure getNome : () ==> seq of char
  getNome() ==
@@ -140,7 +141,7 @@ operations
  );
  -- Retorna o entidade
 (*@
-\label{getEntidade:114}
+\label{getEntidade:115}
 @*)
  public pure getEntidade : () ==> seq of char
  getEntidade() ==
@@ -149,7 +150,7 @@ operations
  );
  -- Retorna o email
 (*@
-\label{getEmail:120}
+\label{getEmail:121}
 @*)
  public pure getEmail : () ==> seq of char
  getEmail() ==
@@ -158,7 +159,7 @@ operations
  );
  -- Retorna o escolaridade
 (*@
-\label{getEscolaridade:126}
+\label{getEscolaridade:127}
 @*)
  public pure getEscolaridade : () ==> Escolaridade
  getEscolaridade() ==
@@ -167,7 +168,7 @@ operations
  );
  -- Retorna o telefone
 (*@
-\label{getTelefone:132}
+\label{getTelefone:133}
 @*)
  public pure getTelefone : () ==> nat1
  getTelefone() ==
@@ -176,7 +177,7 @@ operations
  );
  -- Retorna o pais
 (*@
-\label{getPais:138}
+\label{getPais:139}
 @*)
  public pure getPais : () ==> seq of char
  getPais() ==
@@ -185,7 +186,7 @@ operations
  );
  -- Retorna o localidade
 (*@
-\label{getLocalidade:144}
+\label{getLocalidade:145}
 @*)
  public pure getLocalidade : () ==> seq of char
  getLocalidade() ==
@@ -194,7 +195,7 @@ operations
  );
  -- Retorna o listaEscolaridades
 (*@
-\label{getlistaEscolaridades:150}
+\label{getlistaEscolaridades:151}
 @*)
  public pure getlistaEscolaridades : () ==> ListaEscolaridade
  getlistaEscolaridades() ==
@@ -204,7 +205,7 @@ operations
  
  -- Editar Nome
 (*@
-\label{setNome:157}
+\label{setNome:158}
 @*)
  public setNome: seq of char ==> ()
  setNome(newName) == nome := newName
@@ -213,7 +214,7 @@ operations
  
  -- Editar Entidade
 (*@
-\label{setEntidade:163}
+\label{setEntidade:164}
 @*)
  public setEntidade: seq of char ==> ()
  setEntidade(newEntidade) == entidade := newEntidade
@@ -222,7 +223,7 @@ operations
  
  -- Editar Email
 (*@
-\label{setEmail:169}
+\label{setEmail:170}
 @*)
  public setEmail: seq of char ==> ()
  setEmail(newEmail) == email := newEmail
@@ -231,7 +232,7 @@ operations
  
  -- Editar Telefone
 (*@
-\label{setTelefone:175}
+\label{setTelefone:176}
 @*)
  public setTelefone: nat1 ==> ()
  setTelefone(newTelefone) == telefone := newTelefone
@@ -240,7 +241,7 @@ operations
 
  -- Editar Pais
 (*@
-\label{setPais:181}
+\label{setPais:182}
 @*)
  public setPais: seq of char ==> ()
  setPais(newPais) == pais := newPais
@@ -249,7 +250,7 @@ operations
  
  -- Editar Localidade
 (*@
-\label{setLocalidade:187}
+\label{setLocalidade:188}
 @*)
  public setLocalidade: seq of char ==> ()
  setLocalidade(newLocalidade) == localidade := newLocalidade
@@ -258,7 +259,7 @@ operations
  
  -- Editar Escolaridade
 (*@
-\label{setEscolaridade:193}
+\label{setEscolaridade:194}
 @*)
  public setEscolaridade: Escolaridade ==> ()
  setEscolaridade(newEscolaridade) == escolaridade := newEscolaridade
@@ -266,7 +267,7 @@ operations
  post escolaridade = newEscolaridade;
  
 (*@
-\label{nomeSemelhante:198}
+\label{nomeSemelhante:199}
 @*)
  public pure nomeSemelhante: seq of char ==> bool
  nomeSemelhante(n) == (
@@ -305,56 +306,56 @@ end Trabalho
 Function or operation & Line & Coverage & Calls \\
 \hline
 \hline
-\hyperref[Trabalho:29]{Trabalho} & 29&100.0\% & 20 \\
+\hyperref[Trabalho:29]{Trabalho} & 29&100.0\% & 5 \\
 \hline
-\hyperref[addInteresse:70]{addInteresse} & 70&100.0\% & 16 \\
+\hyperref[addInteresse:71]{addInteresse} & 71&100.0\% & 4 \\
 \hline
-\hyperref[addSkills:89]{addSkills} & 89&100.0\% & 16 \\
+\hyperref[addSkills:90]{addSkills} & 90&100.0\% & 4 \\
 \hline
-\hyperref[getEmail:120]{getEmail} & 120&100.0\% & 44 \\
+\hyperref[getEmail:121]{getEmail} & 121&100.0\% & 14 \\
 \hline
-\hyperref[getEntidade:114]{getEntidade} & 114&100.0\% & 30 \\
+\hyperref[getEntidade:115]{getEntidade} & 115&100.0\% & 9 \\
 \hline
-\hyperref[getEscolaridade:126]{getEscolaridade} & 126&100.0\% & 16 \\
+\hyperref[getEscolaridade:127]{getEscolaridade} & 127&100.0\% & 4 \\
 \hline
-\hyperref[getInteresses:82]{getInteresses} & 82&100.0\% & 100 \\
+\hyperref[getInteresses:83]{getInteresses} & 83&100.0\% & 25 \\
 \hline
-\hyperref[getLocalidade:144]{getLocalidade} & 144&100.0\% & 32 \\
+\hyperref[getLocalidade:145]{getLocalidade} & 145&100.0\% & 8 \\
 \hline
-\hyperref[getNome:108]{getNome} & 108&100.0\% & 34 \\
+\hyperref[getNome:109]{getNome} & 109&100.0\% & 10 \\
 \hline
-\hyperref[getPais:138]{getPais} & 138&100.0\% & 20 \\
+\hyperref[getPais:139]{getPais} & 139&100.0\% & 5 \\
 \hline
-\hyperref[getSkills:101]{getSkills} & 101&100.0\% & 100 \\
+\hyperref[getSkills:102]{getSkills} & 102&100.0\% & 25 \\
 \hline
-\hyperref[getTelefone:132]{getTelefone} & 132&100.0\% & 8 \\
+\hyperref[getTelefone:133]{getTelefone} & 133&100.0\% & 2 \\
 \hline
-\hyperref[getlistaEscolaridades:150]{getlistaEscolaridades} & 150&100.0\% & 72 \\
+\hyperref[getlistaEscolaridades:151]{getlistaEscolaridades} & 151&100.0\% & 18 \\
 \hline
-\hyperref[listaEscolaridades:51]{listaEscolaridades} & 51&100.0\% & 9 \\
+\hyperref[listaEscolaridades:52]{listaEscolaridades} & 52&100.0\% & 1 \\
 \hline
-\hyperref[nomeSemelhante:198]{nomeSemelhante} & 198&100.0\% & 36 \\
+\hyperref[nomeSemelhante:199]{nomeSemelhante} & 199&100.0\% & 4 \\
 \hline
-\hyperref[removeInteresse:76]{removeInteresse} & 76&100.0\% & 4 \\
+\hyperref[removeInteresse:77]{removeInteresse} & 77&100.0\% & 1 \\
 \hline
-\hyperref[removeSkills:95]{removeSkills} & 95&100.0\% & 4 \\
+\hyperref[removeSkills:96]{removeSkills} & 96&100.0\% & 2 \\
 \hline
-\hyperref[setEmail:169]{setEmail} & 169&100.0\% & 4 \\
+\hyperref[setEmail:170]{setEmail} & 170&100.0\% & 1 \\
 \hline
-\hyperref[setEntidade:163]{setEntidade} & 163&100.0\% & 4 \\
+\hyperref[setEntidade:164]{setEntidade} & 164&100.0\% & 2 \\
 \hline
-\hyperref[setEscolaridade:193]{setEscolaridade} & 193&100.0\% & 4 \\
+\hyperref[setEscolaridade:194]{setEscolaridade} & 194&100.0\% & 1 \\
 \hline
-\hyperref[setLocalidade:187]{setLocalidade} & 187&100.0\% & 4 \\
+\hyperref[setLocalidade:188]{setLocalidade} & 188&100.0\% & 1 \\
 \hline
-\hyperref[setNome:157]{setNome} & 157&100.0\% & 4 \\
+\hyperref[setNome:158]{setNome} & 158&100.0\% & 1 \\
 \hline
-\hyperref[setPais:181]{setPais} & 181&100.0\% & 4 \\
+\hyperref[setPais:182]{setPais} & 182&100.0\% & 1 \\
 \hline
-\hyperref[setTelefone:175]{setTelefone} & 175&100.0\% & 4 \\
+\hyperref[setTelefone:176]{setTelefone} & 176&100.0\% & 1 \\
 \hline
 \hline
-Trabalho.vdmpp & & 100.0\% & 589 \\
+Trabalho.vdmpp & & 100.0\% & 149 \\
 \hline
 \end{longtable}
 
