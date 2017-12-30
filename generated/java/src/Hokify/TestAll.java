@@ -5,7 +5,7 @@ import org.overture.codegen.runtime.*;
 
 @SuppressWarnings("all")
 public class TestAll extends MyTestCase {
-  public void TestPlayerFirst() {
+  public void TestPlayer() {
 
     Utilizador user =
         new Utilizador(
@@ -16,7 +16,10 @@ public class TestAll extends MyTestCase {
             "Portugal",
             "Porto",
             27L,
-            123456789L);
+            123456789L,
+            1990L,
+            9L,
+            8L);
     user.addInteresse("Informatica");
     user.addInteresse("Cinema");
     user.addSkills("Java");
@@ -31,6 +34,7 @@ public class TestAll extends MyTestCase {
     assertEqual(user.getTelefone(), 123456789L);
     assertEqual(user.getInteresses(), SetUtil.set("Informatica", "Cinema"));
     assertEqual(user.getSkills(), SetUtil.set("Java", "VDM"));
+    assertEqual(user.getDataNasccimento(), new Utilizador.Date(1990L, 9L, 8L));
     user.removeInteresse("Cinema");
     assertEqual(user.getInteresses(), SetUtil.set("Informatica"));
     user.removeSkills("VDM");
@@ -51,7 +55,7 @@ public class TestAll extends MyTestCase {
     return;
   }
 
-  public void TestTrabalhoFirst() {
+  public void TestTrabalho() {
 
     Trabalho trabalho =
         new Trabalho(
@@ -107,7 +111,10 @@ public class TestAll extends MyTestCase {
             "Portugal",
             "Porto",
             27L,
-            123456789L);
+            123456789L,
+            1990L,
+            10L,
+            31L);
     Utilizador utilizador2 =
         new Utilizador(
             "Fabiola",
@@ -117,7 +124,10 @@ public class TestAll extends MyTestCase {
             "Portugal",
             "Lisboa",
             26L,
-            123123123L);
+            123123123L,
+            1994L,
+            2L,
+            28L);
     Utilizador utilizador3 =
         new Utilizador(
             "Francisca",
@@ -127,7 +137,10 @@ public class TestAll extends MyTestCase {
             "Portugal",
             "Lisboa",
             26L,
-            123132323L);
+            123132323L,
+            1992L,
+            2L,
+            29L);
     Utilizador sameuser =
         new Utilizador(
             "Pedro",
@@ -137,7 +150,10 @@ public class TestAll extends MyTestCase {
             "Portugal",
             "Porto",
             27L,
-            123456789L);
+            123456789L,
+            1990L,
+            10L,
+            31L);
     Trabalho trabalho =
         new Trabalho(
             "Programador de java",
@@ -263,10 +279,10 @@ public class TestAll extends MyTestCase {
   public static void main(String[] args) {
 
     IO.print("TestPlayerFirst -> ");
-    new TestAll().TestPlayerFirst();
+    new TestAll().TestPlayer();
     IO.println("Passed");
     IO.print("TestTrabalhoFirst -> ");
-    new TestAll().TestTrabalhoFirst();
+    new TestAll().TestTrabalho();
     IO.println("Passed");
     IO.print("TestHokify -> ");
     new TestAll().TestHokify();

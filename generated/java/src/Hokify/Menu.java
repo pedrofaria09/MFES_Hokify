@@ -19,7 +19,10 @@ public class Menu {
 		            "Portugal",
 		            "Porto",
 		            27L,
-		            123456789L);
+		            123456789L,
+		            1990L,
+		            9L,
+		            8L);
 		
 		System.out.println("NOME:" + user.toString());
 		

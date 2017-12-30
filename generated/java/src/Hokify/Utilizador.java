@@ -16,6 +16,7 @@ public class Utilizador {
   private VDMSet interesses = SetUtil.set();
   private VDMSet skills = SetUtil.set();
   private VDMSet listaEscolaridade = SetUtil.set();
+  private Date dataNascimento;
 
   public void cg_init_Utilizador_1(
       final String nm,
@@ -25,7 +26,10 @@ public class Utilizador {
       final String paisC,
       final String localidadeC,
       final Number idadeC,
-      final Number telefoneC) {
+      final Number telefoneC,
+      final Number year,
+      final Number month,
+      final Number day) {
 
     nome = nm;
     email = emailC;
@@ -36,6 +40,7 @@ public class Utilizador {
     telefone = telefoneC;
     pais = paisC;
     localidade = localidadeC;
+    dataNascimento = new Date(year, month, day);
     return;
   }
 
@@ -47,9 +52,13 @@ public class Utilizador {
       final String paisC,
       final String localidadeC,
       final Number idadeC,
-      final Number telefoneC) {
+      final Number telefoneC,
+      final Number year,
+      final Number month,
+      final Number day) {
 
-    cg_init_Utilizador_1(nm, emailC, sexoC, escolaridadeC, paisC, localidadeC, idadeC, telefoneC);
+    cg_init_Utilizador_1(
+        nm, emailC, sexoC, escolaridadeC, paisC, localidadeC, idadeC, telefoneC, year, month, day);
   }
 
   public Boolean verificarEscolaridade(final Object escola, final Number idd) {
@@ -236,6 +245,11 @@ public class Utilizador {
     return Utils.copy(listaEscolaridade);
   }
 
+  public Date getDataNasccimento() {
+
+    return Utils.copy(dataNascimento);
+  }
+
   public void setNome(final String newName) {
 
     nome = newName;
@@ -268,6 +282,11 @@ public class Utilizador {
 
   public Utilizador() {}
 
+  public static Number DaysOfMonth(final Number month, final Number year) {
+
+    throw new UnsupportedOperationException();
+  }
+
   public String toString() {
 
     return "Utilizador{"
@@ -293,6 +312,74 @@ public class Utilizador {
         + Utils.toString(skills)
         + ", listaEscolaridade := "
         + Utils.toString(listaEscolaridade)
+        + ", dataNascimento := "
+        + Utils.toString(dataNascimento)
         + "}";
+  }
+
+  public static class Date implements Record {
+    public Number year;
+    public Number month;
+    public Number day;
+
+    public Date(final Number _year, final Number _month, final Number _day) {
+
+      year = _year;
+      month = _month;
+      day = _day;
+    }
+
+    public boolean equals(final Object obj) {
+
+      if (!(obj instanceof Date)) {
+        return false;
+      }
+
+      Date other = ((Date) obj);
+
+      return (Utils.equals(year, other.year))
+          && (Utils.equals(month, other.month))
+          && (Utils.equals(day, other.day));
+    }
+
+    public int hashCode() {
+
+      return Utils.hashCode(year, month, day);
+    }
+
+    public Date copy() {
+
+      return new Date(year, month, day);
+    }
+
+    public String toString() {
+
+      return "mk_Utilizador`Date" + Utils.formatFields(year, month, day);
+    }
+  }
+
+  public static Boolean inv_Date(final Date recordPattern_1) {
+
+    Boolean success_1 = true;
+    Number y = null;
+    Number m = null;
+    Number d = null;
+    y = recordPattern_1.year;
+    m = recordPattern_1.month;
+    d = recordPattern_1.day;
+
+    if (!(success_1)) {
+      throw new RuntimeException("Record pattern match failed");
+    }
+
+    Boolean andResult_24 = false;
+
+    if (m.longValue() <= 12L) {
+      if (d.longValue() <= DaysOfMonth(m, y).longValue()) {
+        andResult_24 = true;
+      }
+    }
+
+    return andResult_24;
   }
 }
