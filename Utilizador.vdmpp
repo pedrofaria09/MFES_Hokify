@@ -12,6 +12,7 @@ types
 	
 values
 -- TODO Define values here
+	public idadeMinima = 18;
 
 instance variables
 -- TODO Define instance variables here
@@ -27,6 +28,7 @@ instance variables
 	private skills: set of String := {};
 	private listaEscolaridade: ListaEscolaridade := {};
 	private dataNascimento : Date;
+	inv idade >= idadeMinima;
 	
 operations
 -- TODO Define operations here
@@ -46,7 +48,7 @@ operations
 		dataNascimento := mk_Date(year, month, day);
 		return self
 	)
-	pre verificarEscolaridade(escolaridadeC, idadeC)
+	pre verificarEscolaridade(escolaridadeC, idadeC) and idadeC >= idadeMinima
 	post interesses = {} and
 			skills = {} and
 			nome = nm and
@@ -60,7 +62,7 @@ operations
 	-- Verifica se o utilizador tem idade para a escolaridade
 	public pure verificarEscolaridade: Escolaridade * nat1 ==> bool
 	verificarEscolaridade(escola, idd)==(
-	if (escola = <Secundario> and idd > 17) then(
+	if (escola = <Secundario> and idd >= 17) then(
 		return true;
 	)elseif(escola = <Licenciatura> and idd > 20) then(
 		return true;

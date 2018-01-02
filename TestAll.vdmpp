@@ -11,6 +11,10 @@ public TestPlayer :() ==> ()
 TestPlayer() ==
 (
 	dcl user : Utilizador := new Utilizador("Pedro","email@email.com",<Masculino>,<Mestrado>,"Portugal","Porto",27,123456789,1990,09,08);
+	
+	-- Declaracao para testes de um utilizador sem idade minima
+	--dcl user2 : Utilizador := new Utilizador("Pedro2","email2@email.com",<Masculino>,<Secundario>,"Portugal","Porto",17,987654321,1990,09,08);
+	
 	user.addInteresse("Informatica");
 	user.addInteresse("Cinema");
 	user.addSkills("Java");
